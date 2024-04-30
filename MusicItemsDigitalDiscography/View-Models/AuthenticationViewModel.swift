@@ -17,6 +17,10 @@ class AuthenticationViewModel: ObservableObject {
     private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     private var userViewModel = UserViewModel()
     
+    var currentUserUID: String? {
+        return Auth.auth().currentUser?.uid
+       }
+    
     init() {
         addAuthStateDidChangeListener()
     }

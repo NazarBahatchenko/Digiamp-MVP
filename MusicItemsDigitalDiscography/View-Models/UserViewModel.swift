@@ -38,7 +38,7 @@ class UserViewModel: ObservableObject {
     func saveUser(_ user: User) async throws {
         let docRef = db.collection("users").document(user.id)
         do {
-            try await docRef.setData(from: user)
+            try docRef.setData(from: user)
             DispatchQueue.main.async {
                 self.currentUser = user
             }

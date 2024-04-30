@@ -13,12 +13,13 @@ struct TabBarView: View {
     
     var body: some View {
         TabView {
-            ContentView(viewModel: viewModel)
+            CollectionListView(viewModel: MusicItemViewModel())
+                .environmentObject(AuthenticationViewModel())
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
 
-            AccountView()
+            AccountView(authViewModel: AuthenticationViewModel())
                 .environmentObject(userViewModel)
                 .tabItem {
                     Label("Account", systemImage: "person.crop.circle")

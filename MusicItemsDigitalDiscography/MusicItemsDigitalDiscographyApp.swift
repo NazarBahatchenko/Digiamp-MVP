@@ -33,6 +33,7 @@ struct MusicItemsDigitalDiscographyApp: App {
             if authViewModel.isAuthenticated {
                 TabBarView(viewModel: authViewModel)
                     .environmentObject(userViewModel)
+                    .environmentObject(authViewModel)
             } else {
                 LogInView(viewModel: authViewModel)
             }

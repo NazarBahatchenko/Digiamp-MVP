@@ -14,14 +14,6 @@ struct EditProfileView: View {
     @State private var bio: String = ""
     @State private var isSaving: Bool = false
     
-    private func loadUserData() {
-        if let user = userViewModel.currentUser {
-            username = user.username
-            displayName = user.displayName ?? ""
-            bio = user.bio ?? ""
-        }
-    }
-
     var body: some View {
         Form {
             Section(header: Text("Personal Information")) {
@@ -38,8 +30,17 @@ struct EditProfileView: View {
                 .disabled(isSaving)
             }
         }
-        .navigationBarTitle("Edit Profile", displayMode: .inline)
+        .navigationTitle("Edit Profile")
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: loadUserData)
+    }
+    
+    private func loadUserData() {
+        if let user = userViewModel.currentUser {
+            username = user.username
+            displayName = user.displayName ?? ""
+            bio = user.bio ?? ""
+        }
     }
     
     private func saveChanges() async {
