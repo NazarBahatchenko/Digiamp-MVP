@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CollectionListView: View {
     @ObservedObject var viewModel: MusicItemViewModel
@@ -40,38 +41,45 @@ struct MusicItemRow: View {
     let musicItem: MusicItem
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text(musicItem.title ?? "N A")
-                .font(.headline)
-                .lineLimit(1)
-
-            if let year = musicItem.year, !year.isEmpty {
-                Text("Year: \(year)")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+        HStack {
+            KFImage(URL(string: musicItem.coverImage ?? ""))
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 150, height: 150)
+            
+            VStack(alignment: .leading, spacing: 5) {
+                Text(musicItem.title)
+                    .font(.headline)
+                    .lineLimit(1)
+                
+                if let year = musicItem.year, !year.isEmpty {
+                    Text("Year: \(year)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
+                if let country = musicItem.country, !country.isEmpty {
+                    Text("Country: \(country)")
+                        .font(.subheadline)
+                }
+                
+                if let genre = musicItem.genre?.joined(separator: ", "), !genre.isEmpty {
+                    Text("Genre: \(genre)")
+                        .font(.subheadline)
+                }
+                
+                if let style = musicItem.style?.joined(separator: ", "), !style.isEmpty {
+                    Text("Style: \(style)")
+                        .font(.subheadline)
+                }
+                
+                if let label = musicItem.label?.joined(separator: ", "), !label.isEmpty {
+                    Text("Label: \(label)")
+                        .font(.subheadline)
+                }
             }
-
-            if let country = musicItem.country, !country.isEmpty {
-                Text("Country: \(country)")
-                    .font(.subheadline)
-            }
-
-            if let genre = musicItem.genre?.joined(separator: ", "), !genre.isEmpty {
-                Text("Genre: \(genre)")
-                    .font(.subheadline)
-            }
-
-            if let style = musicItem.style?.joined(separator: ", "), !style.isEmpty {
-                Text("Style: \(style)")
-                    .font(.subheadline)
-            }
-
-            if let label = musicItem.label?.joined(separator: ", "), !label.isEmpty {
-                Text("Label: \(label)")
-                    .font(.subheadline)
-            }
+            .padding(.vertical, 4)
         }
-        .padding(.vertical, 4)
     }
 }
 

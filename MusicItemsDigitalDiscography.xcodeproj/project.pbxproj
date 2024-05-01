@@ -44,6 +44,9 @@
 		78B636552BD39E6500004EE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78B636542BD39E6500004EE7 /* GoogleService-Info.plist */; };
 		78B636582BD3A13000004EE7 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B636572BD3A13000004EE7 /* AuthenticationViewModel.swift */; };
 		78B6365A2BD3A1BE00004EE7 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B636592BD3A1BE00004EE7 /* LogInView.swift */; };
+		78D8B6652BE2DF4E00D763F7 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */; };
+		78D8B6672BE2E00D00D763F7 /* SearchablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */; };
+		78D8B6692BE2E04F00D763F7 /* CustomButtonFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6682BE2E04F00D763F7 /* CustomButtonFullScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,9 @@
 		78B636562BD39EFB00004EE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		78B636572BD3A13000004EE7 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		78B636592BD3A1BE00004EE7 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
+		78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePicker.swift; sourceTree = "<group>"; };
+		78D8B6682BE2E04F00D763F7 /* CustomButtonFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonFullScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +152,9 @@
 				785D92852BD99D5D006C3D6E /* TabBarView.swift */,
 				785D92952BDA3C19006C3D6E /* AddMusicItemView.swift */,
 				785D929B2BDA3CF4006C3D6E /* CollectionListView.swift */,
+				78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */,
+				78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */,
+				78D8B6682BE2E04F00D763F7 /* CustomButtonFullScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -338,6 +347,8 @@
 				785D929C2BDA3CF4006C3D6E /* CollectionListView.swift in Sources */,
 				785D92862BD99D5D006C3D6E /* TabBarView.swift in Sources */,
 				785D924B2BD960A6006C3D6E /* EditProfileView.swift in Sources */,
+				78D8B6692BE2E04F00D763F7 /* CustomButtonFullScreen.swift in Sources */,
+				78D8B6652BE2DF4E00D763F7 /* CustomTextFieldView.swift in Sources */,
 				78B6365A2BD3A1BE00004EE7 /* LogInView.swift in Sources */,
 				785D92982BDA3C39006C3D6E /* AddMusicItemViewModel.swift in Sources */,
 				785D929A2BDA3CAA006C3D6E /* MusicItemViewModel.swift in Sources */,
@@ -347,6 +358,7 @@
 				785D92A32BDA3D4C006C3D6E /* MusicItem.swift in Sources */,
 				785D92492BD95F1C006C3D6E /* AccountView.swift in Sources */,
 				785D92442BD9046C006C3D6E /* User.swift in Sources */,
+				78D8B6672BE2E00D00D763F7 /* SearchablePicker.swift in Sources */,
 				785D92462BD905E6006C3D6E /* UserViewModel.swift in Sources */,
 				785D92962BDA3C19006C3D6E /* AddMusicItemView.swift in Sources */,
 				78B636092BD39A3E00004EE7 /* MusicItemsDigitalDiscographyApp.swift in Sources */,
