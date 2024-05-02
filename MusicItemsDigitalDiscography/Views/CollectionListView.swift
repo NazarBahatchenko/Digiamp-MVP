@@ -20,7 +20,7 @@ struct CollectionListView: View {
                 }
 
                 List(viewModel.musicItems) { musicItem in
-                        MusicItemRow(musicItem: musicItem)
+                    MusicItemRow(musicItem: musicItem, viewModel: AddMusicItemViewModel())
                 }
 
                 Button("Add Item") {
@@ -39,7 +39,8 @@ struct CollectionListView: View {
 
 struct MusicItemRow: View {
     let musicItem: MusicItem
-
+    @ObservedObject var viewModel: AddMusicItemViewModel
+    
     var body: some View {
         HStack {
             KFImage(URL(string: musicItem.coverImage ?? ""))
@@ -79,6 +80,19 @@ struct MusicItemRow: View {
                 }
             }
             .padding(.vertical, 4)
+            
+            Button {
+                Task {
+                    await viewModel.deleteMusicItem(itemId: musicItem.id, ownerUID: musicItem.ownerUID, coverImageUrl: musicItem.coverImage)
+                }
+            } label: {
+                Image(systemName: "trash.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 50, height: 50)
+                    .foregroundColor(Color.blue)
+            }
+
         }
     }
 }

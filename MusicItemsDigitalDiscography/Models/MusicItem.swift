@@ -21,7 +21,7 @@ struct MusicItem: Codable, Identifiable {
     var isPublic: Bool?
     var label: [String]?
     @ServerTimestamp var lastEdited: Date?
-    var ownerUID: String?
+    var ownerUID: String
     var resourceUrl: String?
     var style: [String]?
     var thumb: String?

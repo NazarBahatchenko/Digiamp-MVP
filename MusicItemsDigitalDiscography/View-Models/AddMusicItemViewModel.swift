@@ -8,6 +8,7 @@
 import Firebase
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseFirestoreSwift
 import CoreGraphics
 import UniformTypeIdentifiers
 
@@ -17,7 +18,8 @@ class AddMusicItemViewModel: ObservableObject {
     @Published var alertMessage: String?
     
     private let db = Firestore.firestore()
-    private let storage = Storage.storage().reference()
+    private let storageRef = Storage.storage().reference()
+    private let storage = Storage.storage()
     
     @Published var genres = [String]()
     @Published var countries = [String]()
@@ -119,7 +121,7 @@ class AddMusicItemViewModel: ObservableObject {
         }
         
         // Reference to the image location in Firebase Storage
-        let imageRef = storage.child("images/\(ownerUID)/\(UUID().uuidString).jpg")
+        let imageRef = storageRef.child("images/\(ownerUID)/\(UUID().uuidString).jpg")
         
         for attempt in 1...retryCount {
             do {
@@ -193,24 +195,35 @@ class AddMusicItemViewModel: ObservableObject {
     }
     
     
-    // Asynchronous method to delete a music item, including images from Firebase Storage
+    // Asynchronous method to delete a music item, including its cover image from Firebase Storage
     func deleteMusicItem(itemId: String, ownerUID: String, coverImageUrl: String?) async {
         let userMusicItemsRef = db.collection("users").document(ownerUID).collection("userMusicItems")
-        let storageRef = storage
         
+        // Attempt to delete the music item document from Firestore
         do {
-            // Delete the Firestore document
             try await userMusicItemsRef.document(itemId).delete()
             print("Successfully deleted Firestore document with ID: \(itemId)")
             
-            // If a cover image URL exists, delete the image from Firebase Storage
+            // If cover image URL exists, attempt to delete the image from Firebase Storage
             if let coverImageUrl = coverImageUrl, !coverImageUrl.isEmpty {
-                let coverImageRef = storageRef.child(coverImageUrl)
-                do {
-                    try await coverImageRef.delete()
-                    print("Successfully deleted cover image from storage.")
-                } catch {
-                    print("Error removing cover image from storage: \(error.localizedDescription)")
+                if coverImageUrl.contains("firebasestorage.googleapis.com") {
+                    // Extract the storage path from the URL
+                    let regex = try! NSRegularExpression(pattern: "/o/(.*)\\?", options: [])
+                    if let match = regex.firstMatch(in: coverImageUrl, options: [], range: NSRange(location: 0, length: coverImageUrl.utf16.count)),
+                       let range = Range(match.range(at: 1), in: coverImageUrl) {
+                        let storagePath = String(coverImageUrl[range]).removingPercentEncoding ?? ""
+                        let coverImageRef = storageRef.child(storagePath)
+                        do {
+                            try await coverImageRef.delete()
+                            print("Successfully deleted cover image from storage.")
+                        } catch {
+                            print("Error removing cover image from storage: \(error.localizedDescription)")
+                        }
+                    } else {
+                        print("Failed to extract path from cover image URL.")
+                    }
+                } else {
+                    print("Invalid cover image URL.")
                 }
             }
         } catch {
