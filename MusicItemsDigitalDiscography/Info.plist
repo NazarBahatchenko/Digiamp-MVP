@@ -17,5 +17,12 @@
 	</array>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.402327710800-2s2mio8v7f85ddieupbg78rj4qjl9gi6</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Poppins-Medium.otf</string>
+		<string>Supreme-Medium.otf</string>
+		<string>Poppins-Regular.otf</string>
+		<string>Supreme-Bold.otf</string>
+	</array>
 </dict>
 </plist>
