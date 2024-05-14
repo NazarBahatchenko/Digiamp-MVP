@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7824AD812BF3D33800B549C8 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7824AD802BF3D33800B549C8 /* SplashScreenView.swift */; };
 		785D566E2BE51E0100CFB91B /* MusicItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D566D2BE51E0100CFB91B /* MusicItemDetailView.swift */; };
 		785D56702BE55B4700CFB91B /* DetailsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D566F2BE55B4700CFB91B /* DetailsRowView.swift */; };
 		785D56722BE69EB300CFB91B /* MusicItemInTrashGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D56712BE69EB300CFB91B /* MusicItemInTrashGridView.swift */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		782460D12BEE24AC009C7802 /* MusicItemsDigitalDiscography.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicItemsDigitalDiscography.entitlements; sourceTree = "<group>"; };
+		7824AD802BF3D33800B549C8 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		785D566D2BE51E0100CFB91B /* MusicItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemDetailView.swift; sourceTree = "<group>"; };
 		785D566F2BE55B4700CFB91B /* DetailsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsRowView.swift; sourceTree = "<group>"; };
 		785D56712BE69EB300CFB91B /* MusicItemInTrashGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemInTrashGridView.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				785D924A2BD960A6006C3D6E /* EditProfileView.swift */,
 				789C5E892BE4F17000638C2F /* APIMusicItemDetailView.swift */,
 				785D566D2BE51E0100CFB91B /* MusicItemDetailView.swift */,
+				7824AD802BF3D33800B549C8 /* SplashScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				785D929A2BDA3CAA006C3D6E /* MusicItemViewModel.swift in Sources */,
 				789C5E7D2BE4EE9C00638C2F /* DiscogsAPIViewModel.swift in Sources */,
 				78B636582BD3A13000004EE7 /* AuthenticationViewModel.swift in Sources */,
+				7824AD812BF3D33800B549C8 /* SplashScreenView.swift in Sources */,
 				78B636172BD39A8900004EE7 /* UIApplication+RootViewController.swift in Sources */,
 				78B6360B2BD39A3E00004EE7 /* ContentView.swift in Sources */,
 				785D566E2BE51E0100CFB91B /* MusicItemDetailView.swift in Sources */,

@@ -36,6 +36,13 @@ struct APIMusicItemDetailView: View {
                         }
                         KFImage(URL(string: ((APIMusicItem.coverImage ?? APIMusicItem.thumb))))
                             .resizable()
+                            .placeholder {
+                                Image("MusicItemThumbPlaceholder")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 250, height: 250)
+                                    .cornerRadius(15)
+                            }
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 250, height: 250)
                             .cornerRadius(15)
@@ -102,7 +109,6 @@ struct APIMusicItemDetailView: View {
                         await addMusicItemViewModel.convertAndSaveToFirestore(apiMusicItem: APIMusicItem, ownerUID: ownerUID)
                         print("MusicItem from Discogs API is saved to Firestore")
                         self.presentationMode.wrappedValue.dismiss()
-//                        showAlert = true
                     }
                 }) {
                     Label("Save to Collection", systemImage: "square.and.arrow.down.on.square")

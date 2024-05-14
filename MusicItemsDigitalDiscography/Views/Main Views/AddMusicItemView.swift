@@ -32,59 +32,57 @@ struct AddMusicItemView: View {
     @State private var formIncompleteAlert = false
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color("MainColor").ignoresSafeArea(.all)
-                ScrollView {
-                    Spacer(minLength: 20)
-                    VStack {
-                        HStack {
-                            ImagePicker(imageData: $coverImageData)
-                                .frame(width: 200, height: 200)
-                                .cornerRadius(15)
-                                .padding(.all)
-                            VStack(alignment: .leading) {
-                                Text("*Ideally Cover Image has to have 1:1 aspect ratio")
-                                    .font(.custom("Poppins-Regular", size: 14))
-                                    .foregroundColor(Color("TextColor"))
-                                    .padding(.bottom)
-                                Text("*Ideally Image Size doesn't have to exceed 5 MB")
-                                    .font(.custom("Poppins-Regular", size: 14))
-                                    .foregroundColor(Color("TextColor"))
-                            }
-                            .padding(.trailing)
+        ZStack {
+            Color("MainColor").ignoresSafeArea(.all)
+            ScrollView {
+                Spacer(minLength: 20)
+                VStack {
+                    HStack {
+                        ImagePicker(imageData: $coverImageData)
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(15)
+                            .padding(.all)
+                        VStack(alignment: .leading) {
+                            Text("*Ideally Cover Image has to have 1:1 aspect ratio")
+                                .font(.custom("Poppins-Regular", size: 14))
+                                .foregroundColor(Color("TextColor"))
+                                .padding(.bottom)
+                            Text("*Ideally Image Size doesn't have to exceed 5 MB")
+                                .font(.custom("Poppins-Regular", size: 14))
+                                .foregroundColor(Color("TextColor"))
                         }
-                        VStack(spacing: 15) {
-                            CustomTextFieldView(text: $title, textFieldTitle: "Title")
-                            CustomTextFieldView(text: $year, textFieldTitle: "Year", isNumeric: true)
-                            SearchablePicker(title: "Country", selection: $country, options: addMusicViewModel.countries)
-                            CustomTextFieldView(text: $label, textFieldTitle: "Label")
-                            SearchablePicker(title: "Genre", selection: $selectedGenre, options: addMusicViewModel.genres)
-                            SearchablePicker(title: "Style", selection: $selectedStyle, options: addMusicViewModel.styles)
-                            CustomTextFieldView(text: $barcode, textFieldTitle: "Barcode", isNumeric: true)
-                            CustomTextFieldView(text: $catno, textFieldTitle: "Catalog Number")
-                        }
-                        Spacer(minLength: 50)
-                        
-                        if formIncompleteAlert {
-                            Text("Please fill all required fields")
-                                .font(.caption)
-                                .foregroundColor(.red)
-                                .padding(.bottom, 5)
-                        }
-                        CustomButtonFullScreen(action: {
-                            Task {
-                                await addMusicItem()
-                            }
-                            isButtonEnabled = false
-                            Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-                                isButtonEnabled = true
-                            }
-                        }, buttonText: "Add New Item")
-                        .disabled(!isButtonEnabled)
+                        .padding(.trailing)
                     }
-                    .padding(.horizontal)
+                    VStack(spacing: 15) {
+                        CustomTextFieldView(text: $title, textFieldTitle: "Title")
+                        CustomTextFieldView(text: $year, textFieldTitle: "Year", isNumeric: true)
+                        SearchablePicker(title: "Country", selection: $country, options: addMusicViewModel.countries)
+                        CustomTextFieldView(text: $label, textFieldTitle: "Label")
+                        SearchablePicker(title: "Genre", selection: $selectedGenre, options: addMusicViewModel.genres)
+                        SearchablePicker(title: "Style", selection: $selectedStyle, options: addMusicViewModel.styles)
+                        CustomTextFieldView(text: $barcode, textFieldTitle: "Barcode", isNumeric: true)
+                        CustomTextFieldView(text: $catno, textFieldTitle: "Catalog Number")
+                    }
+                    Spacer(minLength: 50)
+                    
+                    if formIncompleteAlert {
+                        Text("Please fill all required fields")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                            .padding(.bottom, 5)
+                    }
+                    CustomButtonFullScreen(action: {
+                        Task {
+                            await addMusicItem()
+                        }
+                        isButtonEnabled = false
+                        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+                            isButtonEnabled = true
+                        }
+                    }, buttonText: "Add New Item")
+                    .disabled(!isButtonEnabled)
                 }
+                .padding(.horizontal)
             }
         }
         .navigationBarTitle("Add Music Item", displayMode: .inline)

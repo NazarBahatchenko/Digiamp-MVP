@@ -11,63 +11,54 @@ import CoreHaptics
 
 struct CollectionListView: View {
     @ObservedObject var viewModel: MusicItemViewModel
-    @EnvironmentObject var userViewModel : UserViewModel
-    @EnvironmentObject var authViewModel : AuthenticationViewModel
-    @ObservedObject var discogsViewModel : DiscogsAPIViewModel
-    @State private var navigateToAddMusicItem = false
-    @State private var navigateToSearchDiscogs = false
+    @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
+    @ObservedObject var discogsViewModel: DiscogsAPIViewModel
     @State private var isPresentingScanner = false
     @State private var isPresentedSettingsSheet = false
     @State private var isPresentedTrashSheet = false
     @State private var scannedCode: String?
+    @State private var isPresentingAddMusicItem = false // State variable for AddMusicItemView
+    @State private var isPresentingSearchDiscogs = false // State variable for SearchDiscogsView
 
     var columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
         GridItem(.flexible(), spacing: 15)
     ]
+
     var body: some View {
-        ZStack {
-            NavigationStack {
+        NavigationStack {
+            ZStack {
                 ScrollView {
                     Spacer(minLength: 10)
                     LazyVGrid(columns: columns, spacing: 5) {
-                        if viewModel.isLoading == true {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .foregroundStyle(Color("TextColor"))
-                                ProgressView()
-                                    .scaleEffect(2)
-                                    .frame(width: 175, height: 175)
-                            }
-                        } else {
-                            ForEach(viewModel.musicItems, id: \.id) { item in
-                                NavigationLink(destination: MusicItemDetailView(musicItem: item)) {
-                                    MusicItemGrid(item: item, viewModel: AddMusicItemViewModel(), musicItemViewModel: MusicItemViewModel())
-                                        .shadow(color: Color.black.opacity(0.3), radius: 2)
-                                }
+                        ForEach(viewModel.musicItems, id: \.id) { item in
+                            NavigationLink(value: NavigationDestination.musicItemDetail(item)) {
+                                MusicItemGrid(item: item, viewModel: AddMusicItemViewModel(), musicItemViewModel: viewModel)
+                                    .shadow(color: Color.black.opacity(0.3), radius: 2)
                             }
                         }
                     }
                     .padding(.horizontal)
                 }
                 .onAppear(perform: viewModel.fetchMusicItemsInCollectionView)
-              .navigationTitle("")
-              .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("Music Collection")
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Menu {
-                            Button(action: { isPresentedSettingsSheet = true
+                            Button(action: {
+                                isPresentedSettingsSheet = true
                                 impactFeedback(style: .light)
                             }) {
                                 Label("Settings", systemImage: "slider.horizontal.3")
                             }
-                            Button(action: { isPresentedTrashSheet = true
+                            Button(action: {
+                                isPresentedTrashSheet = true
                                 impactFeedback(style: .light)
                             }) {
-                                
                                 Label("Trash", systemImage: "trash")
                             }
-                            
                         } label: {
                             Image(systemName: "ellipsis.circle")
                         }
@@ -88,10 +79,10 @@ struct CollectionListView: View {
                     }
                 }
                 .sheet(isPresented: $isPresentedSettingsSheet, content: {
-                    settingsSheetContent
+                    SettingsRootView(authViewModel: AuthenticationViewModel())
                 })
                 .sheet(isPresented: $isPresentedTrashSheet, content: {
-                    trashSheetContent
+                    TrashView(viewModel: viewModel)
                 })
                 .sheet(isPresented: $isPresentingScanner) {
                     CodeScannerView(codeTypes: [.ean8, .ean13], simulatedData: "Some simulated data") { result in
@@ -100,7 +91,7 @@ struct CollectionListView: View {
                         case .success(let code):
                             scannedCode = code.string
                             discogsViewModel.query = scannedCode ?? ""
-                            navigateToSearchDiscogs = true
+                            isPresentingSearchDiscogs = true
                         case .failure(let error):
                             print("Scanning failed: \(error.localizedDescription)")
                         }
@@ -108,34 +99,40 @@ struct CollectionListView: View {
                 }
                 .background(
                     Color("MainColor").ignoresSafeArea()
-                    
                 )
-            }
-            .background(navigationLinks)
-            // Needed for '+' Button to be in the bottom
-            VStack {
-                Spacer()
-                HStack {
+                VStack {
                     Spacer()
-                    floatingActionButton()
-                    Spacer()
+                    HStack {
+                        Spacer()
+                        floatingActionButton()
+                        Spacer()
+                    }
                 }
+            }
+            .navigationDestination(isPresented: $isPresentingAddMusicItem) {
+                AddMusicItemView(addMusicViewModel: AddMusicItemViewModel())
+                    .environmentObject(authViewModel)
+            }
+            .navigationDestination(isPresented: $isPresentingSearchDiscogs) {
+                SearchDiscogsView(viewModel: discogsViewModel)
+            }
+            .navigationDestination(for: MusicItem.self) { item in
+                MusicItemDetailView(musicItem: item)
             }
         }
     }
-    
-    
+
     private func floatingActionButton() -> some View {
         Menu {
             Button(action: {
                 impactFeedback(style: .light)
-                navigateToAddMusicItem = true
+                isPresentingAddMusicItem = true // Set the state variable
             }) {
                 Label("Add Manually", systemImage: "square.and.pencil")
             }
             Button(action: {
                 impactFeedback(style: .light)
-                navigateToSearchDiscogs = true
+                isPresentingSearchDiscogs = true // Set the state variable
             }) {
                 Label("Add with Discogs", systemImage: "magnifyingglass")
             }
@@ -160,31 +157,18 @@ struct CollectionListView: View {
         }
         .padding(.all, 20)
     }
-    
-    
 
-    private var settingsSheetContent: some View {
-        SettingsRootView(authViewModel: AuthenticationViewModel())
-    }
-    
-    private var trashSheetContent: some View {
-        TrashView(viewModel: viewModel)
-    }
-    
-    private var navigationLinks: some View {
-        Group {
-            NavigationLink(destination: AddMusicItemView(addMusicViewModel: AddMusicItemViewModel())
-                .environmentObject(authViewModel), isActive: $navigateToAddMusicItem) {
-                    EmptyView()
-                    NavigationLink(destination: SearchDiscogsView(viewModel: discogsViewModel), isActive: $navigateToSearchDiscogs) { EmptyView() }
-                }
-        }
-    }
-    
     private func impactFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
     }
 }
 
+
+
+enum NavigationDestination: Hashable {
+    case addMusicItem
+    case searchDiscogs
+    case musicItemDetail(MusicItem)
+}
 

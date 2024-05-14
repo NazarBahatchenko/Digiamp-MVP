@@ -27,21 +27,32 @@ struct MusicItemsDigitalDiscographyApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var authViewModel = AuthenticationViewModel()
     @StateObject var userViewModel = UserViewModel()
+    @State private var showSplashScreen = true // State variable for splash screen
 
     var body: some Scene {
         WindowGroup {
-            if authViewModel.isAuthenticated {
-                NavigationStack {
-                    CollectionListView(viewModel: MusicItemViewModel(), discogsViewModel: DiscogsAPIViewModel())
-                        .environmentObject(authViewModel)
-                        .environmentObject(userViewModel)
-                }
-            } else {
-                LogInView(viewModel: authViewModel)
-                    .onOpenURL { url in
-                        
+            if showSplashScreen {
+                SplashScreenView()
+                    .onAppear {
+                        // Hide the splash screen after 1 second
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            withAnimation {
+                                showSplashScreen = false
+                            }
+                        }
                     }
+            } else {
+                if authViewModel.isAuthenticated {
+                    NavigationStack {
+                        CollectionListView(viewModel: MusicItemViewModel(), discogsViewModel: DiscogsAPIViewModel())
+                            .environmentObject(authViewModel)
+                            .environmentObject(userViewModel)
+                    }
+                } else {
+                    LogInView(viewModel: authViewModel)
+                }
             }
         }
     }
 }
+

@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct MusicItem: Codable, Identifiable {
+struct MusicItem: Codable, Identifiable, Hashable {
     var id: String
     @ServerTimestamp var addedDate: Date?
     var barcode: String?
