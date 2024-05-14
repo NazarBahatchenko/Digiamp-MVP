@@ -8,71 +8,82 @@
 import SwiftUI
 import FirebaseAuth
 
-struct AccountView: View {
+struct SettingsRootView: View {
     @EnvironmentObject var userViewModel: UserViewModel
     @ObservedObject var authViewModel: AuthenticationViewModel
     @State var isNotificationsOn: Bool = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
-                if let user = userViewModel.currentUser {
-                    Section(header: Text("Profile")) {
+                Section(header: Text("Profile")) {
+                    if let user = userViewModel.currentUser {
                         ProfileSectionView(user: user)
+                    } else {
+                        Text("User data is not available.")
+                            .foregroundColor(.secondary)
                     }
-                    Section(header: Text("Settings")) {
-                        Toggle("Enable Notifications", isOn: $isNotificationsOn)
-                        NavigationLink(destination: EditProfileView()) {
-                            Text("Edit Profile")
-                        }
-                    }
-                } else {
-                    Text("User data is not available.")
-                        .foregroundColor(.secondary)
                 }
-                Button("Log Out", action: authViewModel.signOut)
+                
+                Section(header: Text("Settings")) {
+                    NavigationLink(destination: EditProfileView()) {
+                        Text("Edit Profile")
+                    }
+                    Toggle("Enable Notifications", isOn: $isNotificationsOn)
+                }
+                
+                Section {
+                    Button("Log Out") {
+                        authViewModel.signOut()
+                    }
+                    .foregroundColor(.red)
+                }
             }
-            .onAppear(perform: {
+            .onAppear( perform: {
                 Task {
                     await userViewModel.fetchCurrentUser()
                 }
             })
-            .listStyle(GroupedListStyle())
-            .navigationTitle("Account Settings")
+            .listStyle(InsetGroupedListStyle())
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Refresh") {
+                    Button(action: {
                         Task {
                             await userViewModel.fetchCurrentUser()
                         }
-                    }
+                    }, label: {
+                        Image(systemName: "arrow.clockwise.square")
+                    })
                 }
             }
         }
     }
 }
 
+
 struct ProfileSectionView: View {
-    let user: User
+    let user: TuneTrackerUser
     
     var body: some View {
         HStack(spacing: 15) {
             if let photoURL = URL(string: user.profilePictureURL ?? "") {
                 AsyncImage(url: photoURL) { phase in
-                    if let image = phase.image {
-                        image.resizable()
-                    } else if phase.error != nil {
+                    switch phase {
+                    case .success(let image):
+                        image.resizable().scaledToFill()
+                    case .failure:
                         Image(systemName: "person.crop.circle.badge.exclamationmark")
-                            .resizable()
-                            .scaledToFit()
-                    } else {
-                        Image(systemName: "person.crop.circle")
-                            .resizable()
-                            .scaledToFit()
+                    case .empty:
+                        ProgressView()
+                    @unknown default:
+                        EmptyView()
                     }
                 }
                 .frame(width: 60, height: 60)
                 .clipShape(Circle())
+                .overlay(Circle().stroke(Color.gray, lineWidth: 1))
             } else {
                 Image(systemName: "person.crop.circle")
                     .resizable()
@@ -89,8 +100,4 @@ struct ProfileSectionView: View {
             }
         }
     }
-}
-
-#Preview {
-    AccountView(authViewModel: AuthenticationViewModel())
 }

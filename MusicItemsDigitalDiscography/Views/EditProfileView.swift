@@ -13,28 +13,25 @@ struct EditProfileView: View {
     @State private var displayName: String = ""
     @State private var bio: String = ""
     @State private var isSaving: Bool = false
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        Form {
-            Section(header: Text("Personal Information")) {
-                TextField("Username", text: $username)
-                TextField("Display Name", text: $displayName)
-                TextField("Bio", text: $bio)
+        NavigationStack {
+            VStack(spacing: 20) {
+                CustomTextFieldView(text: $username, textFieldTitle: "Username", isNumeric: false)
+                CustomTextFieldView(text: $displayName, textFieldTitle: "Display Name", isNumeric: false)
+                CustomTextFieldView(text: $bio, textFieldTitle: "Bio", isNumeric: false)
+                
+                CustomButtonFullScreen(
+                           action: saveChanges,
+                           buttonText: "Save Changes")
             }
-            Section {
-                Button("Save Changes") {
-                    Task {
-                        await saveChanges()
-                    }
-                }
-                .disabled(isSaving)
-            }
+            .navigationTitle("Edit Profile")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear(perform: loadUserData)
         }
-        .navigationTitle("Edit Profile")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear(perform: loadUserData)
     }
-    
+
     private func loadUserData() {
         if let user = userViewModel.currentUser {
             username = user.username
@@ -42,13 +39,13 @@ struct EditProfileView: View {
             bio = user.bio ?? ""
         }
     }
-    
+
     private func saveChanges() async {
         guard let currentUser = userViewModel.currentUser else {
             return
         }
         
-        let updatedUser = User(
+        let updatedUser = TuneTrackerUser(
             id: currentUser.id,
             username: username,
             email: currentUser.email,
@@ -70,4 +67,3 @@ struct EditProfileView: View {
         }
     }
 }
-
