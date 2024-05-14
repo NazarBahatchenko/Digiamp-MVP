@@ -12,27 +12,25 @@ struct CustomTextFieldView: View {
     var textFieldTitle: String
     var isNumeric: Bool = false
     var textFieldForegroundText: String = ""
+    var textFieldHeight: CGFloat = 40
     var body: some View {
         
         VStack(alignment: .leading) {
             
             Text(textFieldTitle)
-         //       .font(.custom("Supreme-Medium", size: 14))
-             //   .foregroundColor(Color("TextColor"))
-                .font(.system(size: 14))
-                .foregroundColor(Color.black)
+                .font(.custom("Supreme-Medium", size: 14))
+                .foregroundColor(Color("TextColor"))
 
             TextField(textFieldForegroundText, text: $text)
                 .padding(.leading)
-           //     .font(.custom("Poppins-Regular", size: 14))
-                .font(.system(size: 14))
-                .frame(height: 40) // Removed width: .infinity
-               .background(Color.white)
-               .foregroundColor(Color.blue)
-                .cornerRadius(15)
+                .font(.custom("Poppins-Regular", size: 14))
+                .frame(height: textFieldHeight)
+                .background(Color("MainColor"))
+                .foregroundColor(Color("AccentColor"))
+                .cornerRadius(8)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 15)
-                        .stroke(Color.blue, lineWidth: 2)
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color("AccentColor"), lineWidth: 0.5)
                 )
                 .keyboardType(isNumeric ? .numberPad : .default)
                 .onReceive(text.publisher.collect()) {
