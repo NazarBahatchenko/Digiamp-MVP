@@ -31,11 +31,16 @@ struct MusicItemsDigitalDiscographyApp: App {
     var body: some Scene {
         WindowGroup {
             if authViewModel.isAuthenticated {
-                TabBarView(viewModel: authViewModel)
-                    .environmentObject(userViewModel)
-                    .environmentObject(authViewModel)
+                NavigationStack {
+                    CollectionListView(viewModel: MusicItemViewModel(), discogsViewModel: DiscogsAPIViewModel())
+                        .environmentObject(authViewModel)
+                        .environmentObject(userViewModel)
+                }
             } else {
                 LogInView(viewModel: authViewModel)
+                    .onOpenURL { url in
+                        
+                    }
             }
         }
     }

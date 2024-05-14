@@ -28,9 +28,10 @@ struct MusicItem: Codable, Identifiable {
     var title: String
     var uri: String?
     var year: String?
+    var inTrash: Bool
 
     enum CodingKeys: String, CodingKey {
-        case id, addedDate, barcode, catno, country, coverImage, format, genre, isPublic, label, lastEdited, ownerUID, resourceUrl, style, thumb, title, uri, year
+        case id, addedDate, barcode, catno, country, coverImage, format, genre, isPublic, label, lastEdited, ownerUID, resourceUrl, style, thumb, title, uri, year, inTrash
     }
 }
 

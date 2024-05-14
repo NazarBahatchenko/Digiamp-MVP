@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Codable, Identifiable {
+struct TuneTrackerUser: Codable, Identifiable {
     var id: String  // UID from FirebaseAuth
     var username: String  // Unique username for display and mentions
     var email: String?
