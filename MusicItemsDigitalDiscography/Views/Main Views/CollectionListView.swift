@@ -20,12 +20,12 @@ struct CollectionListView: View {
     @State private var scannedCode: String?
     @State private var isPresentingAddMusicItem = false // State variable for AddMusicItemView
     @State private var isPresentingSearchDiscogs = false // State variable for SearchDiscogsView
-
+    
     var columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
         GridItem(.flexible(), spacing: 15)
     ]
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -33,8 +33,8 @@ struct CollectionListView: View {
                     Spacer(minLength: 10)
                     LazyVGrid(columns: columns, spacing: 5) {
                         ForEach(viewModel.musicItems, id: \.id) { item in
-                            NavigationLink(value: NavigationDestination.musicItemDetail(item)) {
-                                MusicItemGrid(item: item, viewModel: AddMusicItemViewModel(), musicItemViewModel: viewModel)
+                            NavigationLink(destination: MusicItemDetailView(musicItem: item)) {
+                                MusicItemGrid(item: item, viewModel: AddMusicItemViewModel(), musicItemViewModel: MusicItemViewModel())
                                     .shadow(color: Color.black.opacity(0.3), radius: 2)
                             }
                         }
@@ -121,7 +121,7 @@ struct CollectionListView: View {
             }
         }
     }
-
+    
     private func floatingActionButton() -> some View {
         Menu {
             Button(action: {
@@ -157,7 +157,7 @@ struct CollectionListView: View {
         }
         .padding(.all, 20)
     }
-
+    
     private func impactFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
