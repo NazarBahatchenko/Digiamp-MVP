@@ -25,12 +25,12 @@ struct SettingsRootView: View {
                     }
                 }
                 
-                Section(header: Text("Settings")) {
-                    NavigationLink(destination: EditProfileView()) {
-                        Text("Edit Profile")
-                    }
-                    Toggle("Enable Notifications", isOn: $isNotificationsOn)
-                }
+//                Section(header: Text("Settings")) {
+//                    NavigationLink(destination: EditProfileView()) {
+//                        Text("Edit Profile")
+//                    }
+//                    Toggle("Enable Notifications", isOn: $isNotificationsOn)
+//                }
                 
                 Section {
                     Button("Log Out") {
