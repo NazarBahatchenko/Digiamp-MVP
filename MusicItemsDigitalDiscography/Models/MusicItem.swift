@@ -29,9 +29,12 @@ struct MusicItem: Codable, Identifiable, Hashable {
     var uri: String?
     var year: String?
     var inTrash: Bool
+    var links: [String]?  // New field for links
+    var privateNote: String?  // New field for private notes
+    var userRating: Int?  // New field for user rating (1-5)
 
     enum CodingKeys: String, CodingKey {
-        case id, addedDate, barcode, catno, country, coverImage, format, genre, isPublic, label, lastEdited, ownerUID, resourceUrl, style, thumb, title, uri, year, inTrash
+        case id, addedDate, barcode, catno, country, coverImage, format, genre, isPublic, label, lastEdited, ownerUID, resourceUrl, style, thumb, title, uri, year, inTrash, links, privateNote, userRating
     }
 }
 

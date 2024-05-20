@@ -9,7 +9,6 @@ import Foundation
 
 struct APIMusicResponse: Decodable, Equatable {
     let results: [APIMusicItem]
-    let pagination: Pagination
 }
 
 struct APIMusicItem: Decodable, Equatable {
@@ -39,23 +38,6 @@ struct APIMusicItem: Decodable, Equatable {
         var name: String?
         var qty: String?
         var descriptions: [String]?
-    }
-}
-
-struct Pagination: Decodable, Equatable {
-    var page: Int
-    var pages: Int
-    var perPage: Int
-    var items: Int
-    var urls: PaginationURLs
-    
-    enum CodingKeys: String, CodingKey {
-        case page, pages, perPage = "per_page", items, urls
-    }
-
-    struct PaginationURLs: Decodable, Equatable {
-        var last: String?
-        var next: String?
     }
 }
 

@@ -11,6 +11,7 @@ import Foundation
 class DiscogsAPIViewModel: ObservableObject {
     private var networkService = NetworkService()
     @Published var APIMusicItems: [APIMusicItem] = []
+    @Published var detailedMusicItems: [Int: DetailedAPIMusicItem] = [:]
     @Published var isLoading = false
     @Published var currentPage = 1
     @Published var totalPages = 1
@@ -22,12 +23,28 @@ class DiscogsAPIViewModel: ObservableObject {
         }
     }
 
-    // Call this method to update the query and trigger a search
     func setQueryAndSearch(newQuery: String) {
         query = newQuery
     }
     
-    // MARK: - Discogs Search
+    func fetchDetailedMusicItem(resourceUrl: String) async -> DetailedAPIMusicItem? {
+        do {
+            let data = try await networkService.fetchData(from: resourceUrl)
+            
+            // Print the raw JSON response for debugging
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Raw JSON response: \(jsonString)")
+            }
+
+            let decodedResponse = try JSONDecoder().decode(DetailedAPIMusicItem.self, from: data)
+            print("Decoded detailed item: \(decodedResponse)")
+            return decodedResponse
+        } catch {
+            print("Error fetching detailed music item: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
     func fetchSearchResultsWithFormatReleaseOnly(query: String, page: Int) async {
         isLoading = true
         guard let key = ProcessInfo.processInfo.environment["DISCOGS_KEY"],
@@ -40,26 +57,27 @@ class DiscogsAPIViewModel: ObservableObject {
         let baseURL = "https://api.discogs.com/database/search"
         let searchURL = "\(baseURL)?q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&key=\(key)&secret=\(secret)&type=release&page=\(page)&per_page=100"
         
-
         do {
             let data = try await networkService.fetchData(from: searchURL)
             let decodedResponse = try JSONDecoder().decode(APIMusicResponse.self, from: data)
             DispatchQueue.main.async {
                 self.APIMusicItems = decodedResponse.results.filter { $0.type == "release" }
-                self.currentPage = decodedResponse.pagination.page
-                self.totalPages = (decodedResponse.pagination.items + 49) / 50 // Calculate total pages needed
             }
+
+//            // Fetch detailed data for each item
+//            for item in self.APIMusicItems {
+//                if let resourceUrl = item.resourceUrl {
+//                    if let detailedItem = await fetchDetailedMusicItem(resourceUrl: resourceUrl) {
+//                        DispatchQueue.main.async {
+//                            self.detailedMusicItems[item.id] = detailedItem
+//                            print("Updated item with detailed data: \(detailedItem)")
+//                        }
+//                    }
+//                }
+//            }
         } catch {
             print("Error during API request: \(error.localizedDescription)")
         }
         isLoading = false
     }
-
-    func loadNextPage() {
-        guard currentPage < totalPages else { return }
-        Task {
-            await fetchSearchResultsWithFormatReleaseOnly(query: query, page: currentPage + 1)
-        }
-    }
 }
-    

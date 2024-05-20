@@ -4,20 +4,19 @@
 //
 //  Created by Nazar Bahatchenko on 03.05.2024.
 //
-
 import SwiftUI
 import Kingfisher
-import CoreHaptics
 
 struct APIMusicItemDetailView: View {
     var APIMusicItem: APIMusicItem
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject private var addMusicItemViewModel = AddMusicItemViewModel()
-    var showAlert = false
+    @StateObject private var discogsAPIViewModel = DiscogsAPIViewModel()
     @State private var imageScale: CGFloat = 1.2
     @State private var rotationAngles: [Double] = Array(repeating: 0.0, count: 4)
     @State private var mainImageRotationAngle: Double = 0.0
-    
+    @State private var showDetails = false // State to toggle details visibility
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -32,9 +31,9 @@ struct APIMusicItemDetailView: View {
                                 .onAppear {
                                     rotationAngles[index] = Double.random(in: -20...20)
                                 }
-                                .offset(x: Double.random(in: -10...10), y:Double.random(in: -10...10))
+                                .offset(x: Double.random(in: -10...10), y: Double.random(in: -10...10))
                         }
-                        KFImage(URL(string: ((APIMusicItem.coverImage ?? APIMusicItem.thumb))))
+                        KFImage(URL(string: (APIMusicItem.coverImage ?? APIMusicItem.thumb)))
                             .resizable()
                             .placeholder {
                                 Image("MusicItemThumbPlaceholder")
@@ -79,11 +78,101 @@ struct APIMusicItemDetailView: View {
                                 .padding(.vertical, 5)
                             DetailsRowView(name: "LABEL", text: APIMusicItem.label?.joined(separator: ", ") ?? "N/A", lineLimit: 2)
                             DetailsRowView(name: "CATALOG NUMBER", text: APIMusicItem.catno ?? "N/A", lineLimit: 2)
-                            DetailsRowView(name: "BARCODE", text: APIMusicItem.barcode?.joined(separator: ", ") ?? "N/a", lineLimit: 2)
+                            DetailsRowView(name: "BARCODE", text: APIMusicItem.barcode?.joined(separator: ", ") ?? "N/A", lineLimit: 2)
+                        }
+                        
+                        Divider()
+                            .background(Color("AccentColor"))
+                            .padding(.vertical, 5)
+                        
+                        // Button to toggle details visibility
+                        Button(action: {
+                            withAnimation {
+                                showDetails.toggle()
+                            }
+                            
+                            if showDetails {
+                                Task {
+                                    if let resourceUrl = APIMusicItem.resourceUrl {
+                                        if let detailedItem = await discogsAPIViewModel.fetchDetailedMusicItem(resourceUrl: resourceUrl) {
+                                            DispatchQueue.main.async {
+                                                discogsAPIViewModel.detailedMusicItems[APIMusicItem.id] = detailedItem
+                                                print("Detailed item loaded and set: \(detailedItem)")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }) {
+                            HStack {
+                                Text(showDetails ? "Hide Details" : "Show Details")
+                                    .font(.custom("Poppins-Bold", size: 16))
+                                    .foregroundColor(Color("AccentColor"))
+                                Spacer()
+                                Image(systemName: "chevron.compact.down")
+                                    .foregroundColor(Color("AccentColor"))
+                            }
+                            .frame(width: 350, height: 50)
+                        }
+                        .onTapGesture {
+                            Task{
+                              await discogsAPIViewModel.fetchDetailedMusicItem(resourceUrl: APIMusicItem.resourceUrl ?? "")
+                            }
+                        }
+                       
+                        
+                        // Display tracklist and videos if showDetails is true
+                        if showDetails {
+                            VStack(alignment: .leading, spacing: 2) {
+                                if let detailedItem = discogsAPIViewModel.detailedMusicItems[APIMusicItem.id] {
+                                    if let tracklist = detailedItem.tracklist, !tracklist.isEmpty {
+                                        Text("TRACKLIST")
+                                            .font(.custom("Poppins-Medium", size: 10))
+                                            .foregroundStyle(Color("TextColor")).opacity(0.7)
+                                        ForEach(tracklist, id: \.self) { track in
+                                            HStack {
+                                                Text("\(track.position ?? "") - \(track.title ?? "") (\(track.duration ?? "N/A"))")
+                                                    .font(.custom("Poppins-Regular", size: 16))
+                                                    .foregroundStyle(Color("TextColor"))
+                                                    .lineLimit(2)
+                                                    .padding(.bottom, 3)
+                                                Spacer()
+                                            }
+                                        }
+                                    } else {
+                                        Text("No tracklist available")
+                                    }
+                                    Spacer(minLength: 10)
+                                    
+                                    if let videos = detailedItem.videos, !videos.isEmpty {
+                                        Text("VIDEOS")
+                                            .font(.custom("Poppins-Medium", size: 10))
+                                            .foregroundStyle(Color("TextColor")).opacity(0.7)
+                                        ForEach(videos, id: \.self) { video in
+                                            HStack {
+                                                Link(destination: URL(string: video.uri)!) {
+                                                    Text(video.title)
+                                                        .font(.custom("Poppins-Regular", size: 16))
+                                                        .foregroundStyle(Color("AccentColorSecondary"))
+                                                        .lineLimit(1)
+                                                        .padding(.bottom, 3)
+                                                }
+                                                Spacer()
+                                            }
+                                        }
+                                    } else {
+                                        Text("No videos available")
+                                    }
+                                } else {
+                                    Text("Loading details...")
+                                }
+                            }
+                            .padding(.vertical, 5)
                         }
                     }
                     .padding(.horizontal, 20)
                 }
+                Spacer(minLength: 80)
             }
             .frame(minWidth: 390)
             .background(Color("MainColor")).ignoresSafeArea(.all)
@@ -97,8 +186,8 @@ struct APIMusicItemDetailView: View {
         }) {
             Image(systemName: "chevron.left")
         })
-        .navigationBarTitle("Discogs Catalog", displayMode: .inline)
     }
+    
     private var toolbarContent: some ToolbarContent {
         ToolbarItemGroup(placement: .navigationBarTrailing) {
             Menu {
@@ -121,6 +210,7 @@ struct APIMusicItemDetailView: View {
             }
         }
     }
+    
     private func impactFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()

@@ -53,8 +53,5 @@ struct APIMusicItemCellView: View {
             Spacer()
         }
         .padding(2)
-        .onAppear {
-            print("APIMusicItem: \(item)")
-        }
     }
 }

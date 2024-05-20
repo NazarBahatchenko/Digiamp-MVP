@@ -12,29 +12,29 @@ import FirebaseFirestoreSwift
 
 class MusicItemViewModel: ObservableObject {
     @Published var musicItems = [MusicItem]()
-
+    
     private var db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
-
+    
     var isLoading = false
     
     init() {
         fetchMusicItemsInCollectionView()
     }
-
+    
     deinit {
         listenerRegistration?.remove()
     }
-
+    
     func fetchMusicItemsInCollectionView() {
         guard let userId = Auth.auth().currentUser?.uid else {
             print("User not authenticated")
             return
         }
         isLoading = true
-
+        
         listenerRegistration?.remove() // Remove existing listener to prevent duplicates
-
+        
         let musicItemsRef = db.collection("users").document(userId).collection("userMusicItems").whereField("inTrash", isEqualTo: false)
         listenerRegistration = musicItemsRef.addSnapshotListener { [weak self] querySnapshot, error in
             guard let self = self else { return }
@@ -72,7 +72,7 @@ class MusicItemViewModel: ObservableObject {
         isLoading = true
         
         listenerRegistration?.remove() // Remove existing listener to prevent duplicates
-
+        
         let musicItemsRef = db.collection("users").document(userId).collection("userMusicItems").whereField("inTrash", isEqualTo: true)
         listenerRegistration = musicItemsRef.addSnapshotListener { [weak self] querySnapshot, error in
             guard let self = self else { return }
@@ -106,7 +106,7 @@ class MusicItemViewModel: ObservableObject {
             print("User not authenticated")
             return
         }
-
+        
         // Reference to the specific document in the Firestore subcollection
         let itemRef = Firestore.firestore().collection("users")
             .document(userId)
@@ -127,7 +127,7 @@ class MusicItemViewModel: ObservableObject {
             print("User not authenticated")
             return
         }
-
+        
         // Reference to the specific document in the Firestore subcollection
         let itemRef = Firestore.firestore().collection("users")
             .document(userId)
@@ -142,6 +142,63 @@ class MusicItemViewModel: ObservableObject {
             print("Error updating document: \(error.localizedDescription)")
         }
     }
-
+    
+    // Methods to update links, private notes, and user ratings
+    func updateMusicItemLinks(itemId: String, links: [String]) async {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("User not authenticated")
+            return
+        }
+        
+        let itemRef = Firestore.firestore().collection("users")
+            .document(userId)
+            .collection("userMusicItems")
+            .document(itemId)
+        
+        do {
+            try await itemRef.updateData(["links": links])
+            print("Links successfully updated")
+        } catch {
+            print("Error updating links: \(error.localizedDescription)")
+        }
+    }
+    
+    func updateMusicItemPrivateNote(itemId: String, privateNote: String) async {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("User not authenticated")
+            return
+        }
+        
+        let itemRef = Firestore.firestore().collection("users")
+            .document(userId)
+            .collection("userMusicItems")
+            .document(itemId)
+        
+        do {
+            try await itemRef.updateData(["privateNote": privateNote])
+            print("Private note successfully updated")
+        } catch {
+            print("Error updating private note: \(error.localizedDescription)")
+        }
+    }
+    
+    func updateMusicItemUserRating(itemId: String, userRating: Int) async {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("User not authenticated")
+            return
+        }
+        
+        let itemRef = Firestore.firestore().collection("users")
+            .document(userId)
+            .collection("userMusicItems")
+            .document(itemId)
+        
+        do {
+            try await itemRef.updateData(["userRating": userRating])
+            print("User rating successfully updated")
+        } catch {
+            print("Error updating user rating: \(error.localizedDescription)")
+        }
+    }
 }
 
