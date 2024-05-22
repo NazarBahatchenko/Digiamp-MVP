@@ -97,7 +97,6 @@ struct APIMusicItemDetailView: View {
                                         if let detailedItem = await discogsAPIViewModel.fetchDetailedMusicItem(resourceUrl: resourceUrl) {
                                             DispatchQueue.main.async {
                                                 discogsAPIViewModel.detailedMusicItems[APIMusicItem.id] = detailedItem
-                                                print("Detailed item loaded and set: \(detailedItem)")
                                             }
                                         }
                                     }
@@ -119,7 +118,6 @@ struct APIMusicItemDetailView: View {
                               await discogsAPIViewModel.fetchDetailedMusicItem(resourceUrl: APIMusicItem.resourceUrl ?? "")
                             }
                         }
-                       
                         
                         // Display tracklist and videos if showDetails is true
                         if showDetails {
@@ -131,16 +129,25 @@ struct APIMusicItemDetailView: View {
                                             .foregroundStyle(Color("TextColor")).opacity(0.7)
                                         ForEach(tracklist, id: \.self) { track in
                                             HStack {
-                                                Text("\(track.position ?? "") - \(track.title ?? "") (\(track.duration ?? "N/A"))")
+                                                Text("\(track.position ?? ""). \(track.title ?? "")")
                                                     .font(.custom("Poppins-Regular", size: 16))
                                                     .foregroundStyle(Color("TextColor"))
                                                     .lineLimit(2)
                                                     .padding(.bottom, 3)
+                                                
                                                 Spacer()
+                                                
+                                                Text("[\(track.duration ?? "N/A")]")
+                                                    .font(.custom("Poppins-Regular", size: 16))
+                                                    .foregroundStyle(Color("TextColor"))
+                                                    .lineLimit(1)
+                                                    .padding(.bottom, 3)
                                             }
                                         }
                                     } else {
-                                        Text("No tracklist available")
+                                        Text("NO TRACKLIST AVAILABLE")
+                                            .font(.custom("Poppins-Medium", size: 10))
+                                            .foregroundStyle(Color("TextColor")).opacity(0.7)
                                     }
                                     Spacer(minLength: 10)
                                     
@@ -161,10 +168,14 @@ struct APIMusicItemDetailView: View {
                                             }
                                         }
                                     } else {
-                                        Text("No videos available")
+                                        Text("NO VIDEOS AVAILABLE")
+                                            .font(.custom("Poppins-Medium", size: 10))
+                                            .foregroundStyle(Color("TextColor")).opacity(0.7)
                                     }
                                 } else {
                                     Text("Loading details...")
+                                        .font(.custom("Poppins-Medium", size: 10))
+                                        .foregroundStyle(Color("TextColor")).opacity(0.7)
                                 }
                             }
                             .padding(.vertical, 5)

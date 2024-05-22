@@ -21,7 +21,7 @@ struct SearchDiscogsView: View {
                         SearchBarView(viewModel: viewModel)
                         
                         if viewModel.isLoading && viewModel.APIMusicItems.isEmpty {
-                            ProgressView("Loading...")
+                            ProgressView()
                                 .padding()
                         } else {
                             ForEach(viewModel.APIMusicItems, id: \.id) { item in
