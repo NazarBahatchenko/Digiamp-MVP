@@ -64,7 +64,7 @@ struct SettingsRootView: View {
 
 
 struct ProfileSectionView: View {
-    let user: TuneTrackerUser
+    let user: DigiapmUser
     
     var body: some View {
         HStack(spacing: 15) {

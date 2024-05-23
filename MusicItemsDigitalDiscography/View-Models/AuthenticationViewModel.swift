@@ -75,7 +75,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             print("User \(firebaseUser.uid) signed in with email \(firebaseUser.email ?? "unknown")")
             
             // Save or update the user in Firestore
-            let newUser = TuneTrackerUser(id: firebaseUser.uid,
+            let newUser = DigiapmUser(id: firebaseUser.uid,
                                username: firebaseUser.displayName?.replacingOccurrences(of: " ", with: "").lowercased() ?? "user\(Int.random(in: 1000...9999))",
                                email: firebaseUser.email,
                                displayName: firebaseUser.displayName,

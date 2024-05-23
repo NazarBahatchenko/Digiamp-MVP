@@ -45,7 +45,7 @@ struct EditProfileView: View {
             return
         }
         
-        let updatedUser = TuneTrackerUser(
+        let updatedUser = DigiapmUser(
             id: currentUser.id,
             username: username,
             email: currentUser.email,

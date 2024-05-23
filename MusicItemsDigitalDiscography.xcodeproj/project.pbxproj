@@ -11,12 +11,12 @@
 		785D566E2BE51E0100CFB91B /* MusicItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D566D2BE51E0100CFB91B /* MusicItemDetailView.swift */; };
 		785D56702BE55B4700CFB91B /* DetailsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D566F2BE55B4700CFB91B /* DetailsRowView.swift */; };
 		785D56722BE69EB300CFB91B /* MusicItemInTrashGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D56712BE69EB300CFB91B /* MusicItemInTrashGridView.swift */; };
-		785D92442BD9046C006C3D6E /* TuneTrackerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D92432BD9046C006C3D6E /* TuneTrackerUser.swift */; };
+		785D92442BD9046C006C3D6E /* DigiapmUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D92432BD9046C006C3D6E /* DigiapmUser.swift */; };
 		785D92462BD905E6006C3D6E /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D92452BD905E6006C3D6E /* UserViewModel.swift */; };
 		785D92492BD95F1C006C3D6E /* SettingsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D92482BD95F1C006C3D6E /* SettingsRootView.swift */; };
 		785D924B2BD960A6006C3D6E /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D924A2BD960A6006C3D6E /* EditProfileView.swift */; };
 		785D92962BDA3C19006C3D6E /* AddMusicItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D92952BDA3C19006C3D6E /* AddMusicItemView.swift */; };
-		785D92982BDA3C39006C3D6E /* AddMusicItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D92972BDA3C39006C3D6E /* AddMusicItemViewModel.swift */; };
+		785D92982BDA3C39006C3D6E /* FirestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D92972BDA3C39006C3D6E /* FirestoreViewModel.swift */; };
 		785D929A2BDA3CAA006C3D6E /* MusicItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D92992BDA3CAA006C3D6E /* MusicItemViewModel.swift */; };
 		785D929C2BDA3CF4006C3D6E /* CollectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D929B2BDA3CF4006C3D6E /* CollectionListView.swift */; };
 		785D92A12BDA3D2E006C3D6E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 785D92A02BDA3D2E006C3D6E /* Kingfisher */; };
@@ -53,6 +53,8 @@
 		78D8B6652BE2DF4E00D763F7 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */; };
 		78D8B6672BE2E00D00D763F7 /* SearchablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */; };
 		78D8B6692BE2E04F00D763F7 /* CustomButtonFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6682BE2E04F00D763F7 /* CustomButtonFullScreen.swift */; };
+		78E8B7FE2BFF4F1D0094AC28 /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78E8B7FD2BFF4F1D0094AC28 /* Configuration.plist */; };
+		78E8B8002BFF57290094AC28 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8B7FF2BFF57290094AC28 /* Configuration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,13 +63,13 @@
 		785D566D2BE51E0100CFB91B /* MusicItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemDetailView.swift; sourceTree = "<group>"; };
 		785D566F2BE55B4700CFB91B /* DetailsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsRowView.swift; sourceTree = "<group>"; };
 		785D56712BE69EB300CFB91B /* MusicItemInTrashGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemInTrashGridView.swift; sourceTree = "<group>"; };
-		785D92432BD9046C006C3D6E /* TuneTrackerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TuneTrackerUser.swift; sourceTree = "<group>"; };
+		785D92432BD9046C006C3D6E /* DigiapmUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigiapmUser.swift; sourceTree = "<group>"; };
 		785D92452BD905E6006C3D6E /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		785D92482BD95F1C006C3D6E /* SettingsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRootView.swift; sourceTree = "<group>"; };
 		785D924A2BD960A6006C3D6E /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		785D928D2BD9A33B006C3D6E /* MusicItemsDigitalDiscographyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemsDigitalDiscographyTests.swift; sourceTree = "<group>"; };
 		785D92952BDA3C19006C3D6E /* AddMusicItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMusicItemView.swift; sourceTree = "<group>"; };
-		785D92972BDA3C39006C3D6E /* AddMusicItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMusicItemViewModel.swift; sourceTree = "<group>"; };
+		785D92972BDA3C39006C3D6E /* FirestoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreViewModel.swift; sourceTree = "<group>"; };
 		785D92992BDA3CAA006C3D6E /* MusicItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemViewModel.swift; sourceTree = "<group>"; };
 		785D929B2BDA3CF4006C3D6E /* CollectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListView.swift; sourceTree = "<group>"; };
 		785D92A22BDA3D4C006C3D6E /* MusicItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItem.swift; sourceTree = "<group>"; };
@@ -96,6 +98,8 @@
 		78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
 		78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePicker.swift; sourceTree = "<group>"; };
 		78D8B6682BE2E04F00D763F7 /* CustomButtonFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonFullScreen.swift; sourceTree = "<group>"; };
+		78E8B7FD2BFF4F1D0094AC28 /* Configuration.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Configuration.plist; sourceTree = "<group>"; };
+		78E8B7FF2BFF57290094AC28 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +126,7 @@
 		785D92412BD90434006C3D6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				785D92432BD9046C006C3D6E /* TuneTrackerUser.swift */,
+				785D92432BD9046C006C3D6E /* DigiapmUser.swift */,
 				785D92A22BDA3D4C006C3D6E /* MusicItem.swift */,
 				789C5E8B2BE5154600638C2F /* APIMusicItem.swift */,
 				78AA302E2BFB79EC00301AA8 /* DetailedAPIMusicItem.swift */,
@@ -135,7 +139,7 @@
 			children = (
 				78B636572BD3A13000004EE7 /* AuthenticationViewModel.swift */,
 				785D92452BD905E6006C3D6E /* UserViewModel.swift */,
-				785D92972BDA3C39006C3D6E /* AddMusicItemViewModel.swift */,
+				785D92972BDA3C39006C3D6E /* FirestoreViewModel.swift */,
 				785D92992BDA3CAA006C3D6E /* MusicItemViewModel.swift */,
 				789C5E7C2BE4EE9C00638C2F /* DiscogsAPIViewModel.swift */,
 			);
@@ -185,6 +189,7 @@
 			children = (
 				78B636162BD39A8900004EE7 /* UIApplication+RootViewController.swift */,
 				789C5E7E2BE4EEC200638C2F /* NetworkService.swift */,
+				78E8B7FF2BFF57290094AC28 /* Configuration.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -241,6 +246,7 @@
 				78B6360C2BD39A3F00004EE7 /* Assets.xcassets */,
 				789C5E762BE4EB6800638C2F /* Fonts */,
 				78B6360E2BD39A3F00004EE7 /* Preview Content */,
+				78E8B7FD2BFF4F1D0094AC28 /* Configuration.plist */,
 			);
 			path = MusicItemsDigitalDiscography;
 			sourceTree = "<group>";
@@ -332,6 +338,7 @@
 				78B636102BD39A3F00004EE7 /* Preview Assets.xcassets in Resources */,
 				78B6360D2BD39A3F00004EE7 /* Assets.xcassets in Resources */,
 				78B636552BD39E6500004EE7 /* GoogleService-Info.plist in Resources */,
+				78E8B7FE2BFF4F1D0094AC28 /* Configuration.plist in Resources */,
 				788A86472BF1495800135923 /* PrivacyInfo.xcprivacy in Resources */,
 				789C5E772BE4EB6800638C2F /* Fonts in Resources */,
 			);
@@ -350,6 +357,7 @@
 				785D929C2BDA3CF4006C3D6E /* CollectionListView.swift in Sources */,
 				789C5E792BE4ED8600638C2F /* MusicItemGrid.swift in Sources */,
 				789C5E8A2BE4F17000638C2F /* APIMusicItemDetailView.swift in Sources */,
+				78E8B8002BFF57290094AC28 /* Configuration.swift in Sources */,
 				789C5E862BE4F07500638C2F /* SearchBarView.swift in Sources */,
 				785D924B2BD960A6006C3D6E /* EditProfileView.swift in Sources */,
 				785D56722BE69EB300CFB91B /* MusicItemInTrashGridView.swift in Sources */,
@@ -358,7 +366,7 @@
 				78D8B6652BE2DF4E00D763F7 /* CustomTextFieldView.swift in Sources */,
 				78B6365A2BD3A1BE00004EE7 /* LogInView.swift in Sources */,
 				789C5E7B2BE4EE0D00638C2F /* TrashView.swift in Sources */,
-				785D92982BDA3C39006C3D6E /* AddMusicItemViewModel.swift in Sources */,
+				785D92982BDA3C39006C3D6E /* FirestoreViewModel.swift in Sources */,
 				785D929A2BDA3CAA006C3D6E /* MusicItemViewModel.swift in Sources */,
 				789C5E7D2BE4EE9C00638C2F /* DiscogsAPIViewModel.swift in Sources */,
 				78B636582BD3A13000004EE7 /* AuthenticationViewModel.swift in Sources */,
@@ -368,7 +376,7 @@
 				785D566E2BE51E0100CFB91B /* MusicItemDetailView.swift in Sources */,
 				785D92A32BDA3D4C006C3D6E /* MusicItem.swift in Sources */,
 				785D92492BD95F1C006C3D6E /* SettingsRootView.swift in Sources */,
-				785D92442BD9046C006C3D6E /* TuneTrackerUser.swift in Sources */,
+				785D92442BD9046C006C3D6E /* DigiapmUser.swift in Sources */,
 				78D8B6672BE2E00D00D763F7 /* SearchablePicker.swift in Sources */,
 				785D92462BD905E6006C3D6E /* UserViewModel.swift in Sources */,
 				785D92962BDA3C19006C3D6E /* AddMusicItemView.swift in Sources */,

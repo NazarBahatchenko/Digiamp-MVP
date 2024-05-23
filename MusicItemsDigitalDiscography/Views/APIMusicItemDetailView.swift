@@ -10,7 +10,7 @@ import Kingfisher
 struct APIMusicItemDetailView: View {
     var APIMusicItem: APIMusicItem
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject private var addMusicItemViewModel = AddMusicItemViewModel()
+    @StateObject private var addMusicItemViewModel = FirestoreViewModel()
     @StateObject private var discogsAPIViewModel = DiscogsAPIViewModel()
     @State private var imageScale: CGFloat = 1.2
     @State private var rotationAngles: [Double] = Array(repeating: 0.0, count: 4)
@@ -54,13 +54,18 @@ struct APIMusicItemDetailView: View {
                                 withAnimation(.easeInOut(duration: 0.5)) {
                                     imageScale = 1.0
                                 }
+                                
+                                // Fetch both main data and details concurrently
+                                Task {
+                                    await discogsAPIViewModel.fetchMainAndDetailedData(for: APIMusicItem)
+                                }
                             }
                     }
                     Spacer(minLength: 50)
                     
                     VStack(alignment: .leading, spacing: 8) {
                         Text(APIMusicItem.title)
-                            .lineLimit(2)
+                            .lineLimit(3)
                             .font(.custom("Supreme-Bold", size: 24))
                             .foregroundStyle(Color("TextColor"))
                             .padding(.top, 5)
@@ -85,43 +90,31 @@ struct APIMusicItemDetailView: View {
                             .background(Color("AccentColor"))
                             .padding(.vertical, 5)
                         
-                        // Button to toggle details visibility
                         Button(action: {
                             withAnimation {
                                 showDetails.toggle()
                             }
-                            
-                            if showDetails {
-                                Task {
-                                    if let resourceUrl = APIMusicItem.resourceUrl {
-                                        if let detailedItem = await discogsAPIViewModel.fetchDetailedMusicItem(resourceUrl: resourceUrl) {
-                                            DispatchQueue.main.async {
-                                                discogsAPIViewModel.detailedMusicItems[APIMusicItem.id] = detailedItem
-                                            }
-                                        }
-                                    }
-                                }
-                            }
                         }) {
-                            HStack {
-                                Text(showDetails ? "Hide Details" : "Show Details")
-                                    .font(.custom("Poppins-Bold", size: 16))
-                                    .foregroundColor(Color("AccentColor"))
-                                Spacer()
-                                Image(systemName: "chevron.compact.down")
-                                    .foregroundColor(Color("AccentColor"))
-                            }
-                            .frame(width: 350, height: 50)
-                        }
-                        .onTapGesture {
-                            Task{
-                              await discogsAPIViewModel.fetchDetailedMusicItem(resourceUrl: APIMusicItem.resourceUrl ?? "")
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 15)
+                                    .frame(width: 350, height: 50)
+                                    .foregroundStyle(Color("MainColor"))
+                                    .shadow(radius: 1)
+                                HStack {
+                                    Text(showDetails ? "Less Details" : "More Details")
+                                        .font(.custom("Poppins-Bold", size: 16))
+                                        .foregroundColor(Color("AccentColor"))
+                                    Spacer()
+                                    Image(systemName: showDetails ? "chevron.up" : "chevron.down")
+                                        .foregroundColor(Color("AccentColor"))
+                                }
+                                .frame(width: 320, height: 50)
                             }
                         }
                         
                         // Display tracklist and videos if showDetails is true
                         if showDetails {
-                            VStack(alignment: .leading, spacing: 2) {
+                            VStack(alignment: .leading, spacing: 5) {
                                 if let detailedItem = discogsAPIViewModel.detailedMusicItems[APIMusicItem.id] {
                                     if let tracklist = detailedItem.tracklist, !tracklist.isEmpty {
                                         Text("TRACKLIST")
@@ -129,19 +122,29 @@ struct APIMusicItemDetailView: View {
                                             .foregroundStyle(Color("TextColor")).opacity(0.7)
                                         ForEach(tracklist, id: \.self) { track in
                                             HStack {
-                                                Text("\(track.position ?? ""). \(track.title ?? "")")
+                                                Text("\(track.position ?? "")")
+                                                    .font(.custom("Poppins-Regular", size: 16))
+                                                    .foregroundStyle(Color("TextColor"))
+                                                    .lineLimit(2)
+                                                    .frame(width: 20)
+                                                    .padding(.bottom, 3)
+                                                
+                                                Text("\(track.title ?? "")")
                                                     .font(.custom("Poppins-Regular", size: 16))
                                                     .foregroundStyle(Color("TextColor"))
                                                     .lineLimit(2)
                                                     .padding(.bottom, 3)
+                                                    .padding(.horizontal, 5)
                                                 
                                                 Spacer()
                                                 
-                                                Text("[\(track.duration ?? "N/A")]")
-                                                    .font(.custom("Poppins-Regular", size: 16))
-                                                    .foregroundStyle(Color("TextColor"))
-                                                    .lineLimit(1)
-                                                    .padding(.bottom, 3)
+                                                if track.duration != nil {
+                                                    Text("[\(track.duration ?? "N/A")]")
+                                                        .font(.custom("Poppins-Regular", size: 16))
+                                                        .foregroundStyle(Color("TextColor"))
+                                                        .lineLimit(2)
+                                                        .padding(.bottom, 3)
+                                                }
                                             }
                                         }
                                     } else {
@@ -156,15 +159,14 @@ struct APIMusicItemDetailView: View {
                                             .font(.custom("Poppins-Medium", size: 10))
                                             .foregroundStyle(Color("TextColor")).opacity(0.7)
                                         ForEach(videos, id: \.self) { video in
-                                            HStack {
+                                            VStack(alignment: .leading){
                                                 Link(destination: URL(string: video.uri)!) {
                                                     Text(video.title)
                                                         .font(.custom("Poppins-Regular", size: 16))
                                                         .foregroundStyle(Color("AccentColorSecondary"))
-                                                        .lineLimit(1)
+                                                        .lineLimit(2)
                                                         .padding(.bottom, 3)
                                                 }
-                                                Spacer()
                                             }
                                         }
                                     } else {
@@ -173,9 +175,8 @@ struct APIMusicItemDetailView: View {
                                             .foregroundStyle(Color("TextColor")).opacity(0.7)
                                     }
                                 } else {
-                                    Text("Loading details...")
-                                        .font(.custom("Poppins-Medium", size: 10))
-                                        .foregroundStyle(Color("TextColor")).opacity(0.7)
+                                    ProgressView()
+                                        .frame(width: 350, height: 50)
                                 }
                             }
                             .padding(.vertical, 5)
@@ -183,7 +184,7 @@ struct APIMusicItemDetailView: View {
                     }
                     .padding(.horizontal, 20)
                 }
-                Spacer(minLength: 80)
+                Spacer(minLength: 50)
             }
             .frame(minWidth: 390)
             .background(Color("MainColor")).ignoresSafeArea(.all)

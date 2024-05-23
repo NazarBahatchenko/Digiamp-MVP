@@ -34,7 +34,7 @@ struct CollectionListView: View {
                     LazyVGrid(columns: columns, spacing: 5) {
                         ForEach(viewModel.musicItems, id: \.id) { item in
                             NavigationLink(destination: MusicItemDetailView(musicItem: item)) {
-                                MusicItemGrid(item: item, viewModel: AddMusicItemViewModel(), musicItemViewModel: MusicItemViewModel())
+                                MusicItemGrid(item: item, viewModel: FirestoreViewModel(), musicItemViewModel: MusicItemViewModel())
                                     .shadow(color: Color.black.opacity(0.3), radius: 2)
                             }
                         }
@@ -110,7 +110,7 @@ struct CollectionListView: View {
                 }
             }
             .navigationDestination(isPresented: $isPresentingAddMusicItem) {
-                AddMusicItemView(addMusicViewModel: AddMusicItemViewModel())
+                AddMusicItemView(addMusicViewModel: FirestoreViewModel())
                     .environmentObject(authViewModel)
             }
             .navigationDestination(isPresented: $isPresentingSearchDiscogs) {

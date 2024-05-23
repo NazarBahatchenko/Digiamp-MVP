@@ -1,0 +1,91 @@
+# Objective-C/Swift
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Build generated files
+DerivedData/
+build/
+
+# Various settings and environment files
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+
+# Use the following line if you don't want to check in the Xcode workspace file
+*.xcworkspace
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+
+# fastlane
+# It is recommended to not store the screenshots in the git repo.
+# Instead, use fastlane to re-generate the screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Swift Package Manager
+# Add this line if you have Package.resolved checked in to your repository
+# See https://github.com/apple/swift-package-manager/blob/main/Documentation/Usage.md#package-resolved
+Package.resolved
+# Add the following line if you want to ignore SPM caches
+/.build/
+# Xcode automatically generates this directory with a package
+# cache. You may not want to check in the package cache either.
+.xcpackage
+
+# Add this line if you want to avoid checking in source code that
+# could potentially cause issues when working with SPM dependencies
+# like dynamic libraries or frameworks.
+.swiftpm/
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Xcode environment settings
+xcdebugger/
+*.xcscmblueprint
+*.xccheckout
+
+# App specific files
+Configuration.plist
+GoogleService-Info.plist
+
+# Bundler
+/.bundle/
+
+# SPM specific files
+/Packages/
+.swiftpm/
+.build/
+
+# Generally ignored files
+.DS_Store
+*.swp
+*~.nib~.locks
+*.lock
+
+# Certificates and profiles
+*.mobileprovision
+*.provisionprofile
+
+# Add any other custom ignores for your project below this line

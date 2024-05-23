@@ -22,7 +22,7 @@ struct TrashView: View {
                 LazyVGrid(columns: columns, spacing: 15) {
                     ForEach(viewModel.musicItems, id: \.id) { item in
                         NavigationLink(destination: MusicItemDetailView(musicItem: item)) {
-                            MusicItemInTrashGridView(item: item, viewModel: AddMusicItemViewModel(), musicItemViewModel: MusicItemViewModel())
+                            MusicItemInTrashGridView(item: item, viewModel: FirestoreViewModel(), musicItemViewModel: MusicItemViewModel())
                                 .shadow(color: Color.black.opacity(0.3), radius: 2)
                         }
                     }

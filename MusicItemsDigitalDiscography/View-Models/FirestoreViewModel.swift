@@ -13,7 +13,7 @@ import CoreGraphics
 import UniformTypeIdentifiers
 
 @MainActor
-class AddMusicItemViewModel: ObservableObject {
+class FirestoreViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var alertMessage: String?
     

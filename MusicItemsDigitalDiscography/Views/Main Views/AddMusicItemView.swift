@@ -24,7 +24,7 @@ struct AddMusicItemView: View {
     @State private var alertMessage: String = ""
     @State private var isButtonEnabled = true
     
-    @ObservedObject var addMusicViewModel: AddMusicItemViewModel
+    @ObservedObject var addMusicViewModel: FirestoreViewModel
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
     
     @Environment(\.presentationMode) var presentationMode

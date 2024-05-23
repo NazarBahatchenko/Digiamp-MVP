@@ -13,7 +13,7 @@ struct MusicItemInTrashGridView: View {
     var item: MusicItem
     @State private var showingDeleteAlert = false
     let coverImageSize: CGFloat = 175
-    @ObservedObject var viewModel: AddMusicItemViewModel
+    @ObservedObject var viewModel: FirestoreViewModel
     @ObservedObject var musicItemViewModel: MusicItemViewModel
     
     var body: some View {
