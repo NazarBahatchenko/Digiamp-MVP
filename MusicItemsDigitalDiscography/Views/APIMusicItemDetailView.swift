@@ -12,9 +12,6 @@ struct APIMusicItemDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject private var addMusicItemViewModel = FirestoreViewModel()
     @StateObject private var discogsAPIViewModel = DiscogsAPIViewModel()
-    @State private var imageScale: CGFloat = 1.2
-    @State private var rotationAngles: [Double] = Array(repeating: 0.0, count: 4)
-    @State private var mainImageRotationAngle: Double = 0.0
     @State private var showDetails = false // State to toggle details visibility
 
     var body: some View {
@@ -22,45 +19,12 @@ struct APIMusicItemDetailView: View {
             ScrollView {
                 Spacer(minLength: 120)
                 VStack {
-                    ZStack {
-                        ForEach(0..<3, id: \.self) { index in
-                            RoundedRectangle(cornerRadius: 5)
-                                .frame(width: 250, height: 250)
-                                .foregroundStyle(Color("TextColor")).opacity(0.3)
-                                .rotationEffect(Angle(degrees: rotationAngles[index]))
-                                .onAppear {
-                                    rotationAngles[index] = Double.random(in: -20...20)
-                                }
-                                .offset(x: Double.random(in: -10...10), y: Double.random(in: -10...10))
+                    CoverImageView(imageUrl: APIMusicItem.coverImage ?? APIMusicItem.thumb)
+                        .onAppear {
+                            Task {
+                                await discogsAPIViewModel.fetchMainAndDetailedData(for: APIMusicItem)
+                            }
                         }
-                        KFImage(URL(string: (APIMusicItem.coverImage ?? APIMusicItem.thumb)))
-                            .resizable()
-                            .placeholder {
-                                Image("MusicItemThumbPlaceholder")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 250, height: 250)
-                                    .cornerRadius(15)
-                            }
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 250, height: 250)
-                            .cornerRadius(15)
-                            .clipped()
-                            .scaleEffect(imageScale)
-                            .rotationEffect(Angle(degrees: mainImageRotationAngle))
-                            .onAppear {
-                                mainImageRotationAngle = Double.random(in: -15...15)
-                                
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    imageScale = 1.0
-                                }
-                                
-                                // Fetch both main data and details concurrently
-                                Task {
-                                    await discogsAPIViewModel.fetchMainAndDetailedData(for: APIMusicItem)
-                                }
-                            }
-                    }
                     Spacer(minLength: 50)
                     
                     VStack(alignment: .leading, spacing: 8) {
@@ -125,7 +89,7 @@ struct APIMusicItemDetailView: View {
                                                 Text("\(track.position ?? "")")
                                                     .font(.custom("Poppins-Regular", size: 16))
                                                     .foregroundStyle(Color("TextColor"))
-                                                    .lineLimit(2)
+                                                    .lineLimit(1)
                                                     .frame(width: 20)
                                                     .padding(.bottom, 3)
                                                 
@@ -142,7 +106,7 @@ struct APIMusicItemDetailView: View {
                                                     Text("[\(track.duration ?? "N/A")]")
                                                         .font(.custom("Poppins-Regular", size: 16))
                                                         .foregroundStyle(Color("TextColor"))
-                                                        .lineLimit(2)
+                                                        .lineLimit(1)
                                                         .padding(.bottom, 3)
                                                 }
                                             }
@@ -228,3 +192,4 @@ struct APIMusicItemDetailView: View {
         generator.impactOccurred()
     }
 }
+

@@ -32,10 +32,44 @@ struct MusicItem: Codable, Identifiable, Hashable {
     var links: [String]?  // New field for links
     var privateNote: String?  // New field for private notes
     var userRating: Int?  // New field for user rating (1-5)
+    var tracklist: [Track]?
+    var videos: [Video]?
 
+    struct Track: Codable, Equatable, Hashable {
+        var position: String?
+        var title: String?
+        var duration: String?
+    }
+
+    struct Video: Codable, Equatable, Hashable {
+        var uri: String
+        var title: String
+    }
+    
     enum CodingKeys: String, CodingKey {
-        case id, addedDate, barcode, catno, country, coverImage, format, genre, isPublic, label, lastEdited, ownerUID, resourceUrl, style, thumb, title, uri, year, inTrash, links, privateNote, userRating
+        case id
+        case addedDate
+        case barcode
+        case catno
+        case country
+        case coverImage
+        case format
+        case genre
+        case isPublic
+        case label
+        case lastEdited
+        case ownerUID
+        case resourceUrl
+        case style
+        case thumb
+        case title
+        case uri
+        case year
+        case inTrash
+        case links
+        case privateNote
+        case userRating
+        case tracklist
+        case videos
     }
 }
-
-

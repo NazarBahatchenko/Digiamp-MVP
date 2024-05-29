@@ -233,39 +233,74 @@ class FirestoreViewModel: ObservableObject {
     }
 
     func convertAndSaveToFirestore(apiMusicItem: APIMusicItem, ownerUID: String) async {
-        // Save the MusicItem to Firestore, let Firestore automatically generate an ID
-        let musicItemsRef = db.collection("users").document(ownerUID).collection("userMusicItems")
-        
-        let musicItem = MusicItem(
-            id: "", // Placeholder value, Firestore will assign a proper value
-            addedDate: Date(),
-            barcode: apiMusicItem.barcode?.first,
-            catno: apiMusicItem.catno,
-            country: apiMusicItem.country,
-            coverImage: apiMusicItem.coverImage ?? apiMusicItem.thumb,
-            format: apiMusicItem.format,
-            genre: apiMusicItem.genre,
-            isPublic: false, // Adjust this according to your requirements
-            label: apiMusicItem.label,
-            lastEdited: Date(),
-            ownerUID: ownerUID,
-            resourceUrl: apiMusicItem.resourceUrl,
-            style: apiMusicItem.style,
-            thumb: apiMusicItem.thumb,
-            title: apiMusicItem.title,
-            uri: apiMusicItem.uri,
-            year: apiMusicItem.year,
-            inTrash: false
-        )
-        
-        
-        do {
-            let documentReference = try musicItemsRef.addDocument(from: musicItem)
-            print("Music item added successfully with ID: \(documentReference.documentID)")
-        } catch {
-            print("Error saving MusicItem to Firestore: \(error.localizedDescription)")
+            // Fetch detailed information
+            guard let resourceUrl = apiMusicItem.resourceUrl else {
+                print("Resource URL is missing")
+                return
+            }
+            
+            let detailedItem: DetailedAPIMusicItem
+            do {
+                detailedItem = try await fetchDetailedMusicItem(resourceUrl: resourceUrl)
+            } catch {
+                print("Error fetching detailed music item: \(error.localizedDescription)")
+                return
+            }
+
+            // Convert DetailedAPIMusicItem.Track to MusicItem.Track
+            let tracklist: [MusicItem.Track]? = detailedItem.tracklist?.map {
+                MusicItem.Track(position: $0.position, title: $0.title, duration: $0.duration)
+            }
+            
+            // Convert DetailedAPIMusicItem.Video to MusicItem.Video
+            let videos: [MusicItem.Video]? = detailedItem.videos?.map {
+                MusicItem.Video(uri: $0.uri, title: $0.title)
+            }
+
+            // Save the MusicItem to Firestore, let Firestore automatically generate an ID
+            let musicItemsRef = db.collection("users").document(ownerUID).collection("userMusicItems")
+
+            let musicItem = MusicItem(
+                id: "", // Placeholder value, Firestore will assign a proper value
+                addedDate: Date(),
+                barcode: apiMusicItem.barcode?.first,
+                catno: apiMusicItem.catno,
+                country: apiMusicItem.country,
+                coverImage: apiMusicItem.coverImage ?? apiMusicItem.thumb,
+                format: apiMusicItem.format,
+                genre: apiMusicItem.genre,
+                isPublic: false, // Adjust this according to your requirements
+                label: apiMusicItem.label,
+                lastEdited: Date(),
+                ownerUID: ownerUID,
+                resourceUrl: apiMusicItem.resourceUrl,
+                style: apiMusicItem.style,
+                thumb: apiMusicItem.thumb,
+                title: apiMusicItem.title,
+                uri: apiMusicItem.uri,
+                year: apiMusicItem.year,
+                inTrash: false,
+                links: [],
+                privateNote: "",
+                userRating: 0,
+                tracklist: tracklist,
+                videos: videos
+            )
+
+            do {
+                let documentReference = try musicItemsRef.addDocument(from: musicItem)
+                print("Music item added successfully with ID: \(documentReference.documentID)")
+            } catch {
+                print("Error saving MusicItem to Firestore: \(error.localizedDescription)")
+            }
         }
-    }
+        
+        // Method to fetch detailed music item
+        private func fetchDetailedMusicItem(resourceUrl: String) async throws -> DetailedAPIMusicItem {
+            let data = try await NetworkService().fetchData(from: resourceUrl)
+            let decodedResponse = try JSONDecoder().decode(DetailedAPIMusicItem.self, from: data)
+            return decodedResponse
+        }
     
 }
 

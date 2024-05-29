@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7824AD812BF3D33800B549C8 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7824AD802BF3D33800B549C8 /* SplashScreenView.swift */; };
+		783A84732C01411300CF56FF /* CoverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783A84722C01411300CF56FF /* CoverImageView.swift */; };
 		785D566E2BE51E0100CFB91B /* MusicItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D566D2BE51E0100CFB91B /* MusicItemDetailView.swift */; };
 		785D56702BE55B4700CFB91B /* DetailsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D566F2BE55B4700CFB91B /* DetailsRowView.swift */; };
 		785D56722BE69EB300CFB91B /* MusicItemInTrashGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D56712BE69EB300CFB91B /* MusicItemInTrashGridView.swift */; };
@@ -60,6 +61,7 @@
 /* Begin PBXFileReference section */
 		782460D12BEE24AC009C7802 /* MusicItemsDigitalDiscography.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicItemsDigitalDiscography.entitlements; sourceTree = "<group>"; };
 		7824AD802BF3D33800B549C8 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		783A84722C01411300CF56FF /* CoverImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverImageView.swift; sourceTree = "<group>"; };
 		785D566D2BE51E0100CFB91B /* MusicItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemDetailView.swift; sourceTree = "<group>"; };
 		785D566F2BE55B4700CFB91B /* DetailsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsRowView.swift; sourceTree = "<group>"; };
 		785D56712BE69EB300CFB91B /* MusicItemInTrashGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemInTrashGridView.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				785D56712BE69EB300CFB91B /* MusicItemInTrashGridView.swift */,
 				785D566F2BE55B4700CFB91B /* DetailsRowView.swift */,
 				788A86442BF115B100135923 /* APIMusicItemCellView.swift */,
+				783A84722C01411300CF56FF /* CoverImageView.swift */,
 			);
 			path = "Reusable Views";
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				785D92442BD9046C006C3D6E /* DigiapmUser.swift in Sources */,
 				78D8B6672BE2E00D00D763F7 /* SearchablePicker.swift in Sources */,
 				785D92462BD905E6006C3D6E /* UserViewModel.swift in Sources */,
+				783A84732C01411300CF56FF /* CoverImageView.swift in Sources */,
 				785D92962BDA3C19006C3D6E /* AddMusicItemView.swift in Sources */,
 				789C5E842BE4F05700638C2F /* SearchDiscogsView.swift in Sources */,
 				788A86452BF115B100135923 /* APIMusicItemCellView.swift in Sources */,
