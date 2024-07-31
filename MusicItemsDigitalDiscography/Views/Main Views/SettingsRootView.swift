@@ -2,9 +2,8 @@
 //  AccountView.swift
 //  MusicItemsDigitalDiscography
 //
-//  Created by Nazar Bahatchenko on 24.04.2024.
+//  Created by Nazar Bahatchenko
 //
-
 import SwiftUI
 import FirebaseAuth
 
@@ -12,7 +11,6 @@ struct SettingsRootView: View {
     @EnvironmentObject var userViewModel: UserViewModel
     @ObservedObject var authViewModel: AuthenticationViewModel
     @State var isNotificationsOn: Bool = false
-    
     var body: some View {
         NavigationStack {
             List {
@@ -24,14 +22,12 @@ struct SettingsRootView: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                
 //                Section(header: Text("Settings")) {
 //                    NavigationLink(destination: EditProfileView()) {
 //                        Text("Edit Profile")
 //                    }
 //                    Toggle("Enable Notifications", isOn: $isNotificationsOn)
-//                }
-                
+//                }                
                 Section {
                     Button("Log Out") {
                         authViewModel.signOut()

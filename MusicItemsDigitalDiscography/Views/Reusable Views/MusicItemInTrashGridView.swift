@@ -27,7 +27,7 @@ struct MusicItemInTrashGridView: View {
                 }
                 .aspectRatio(contentMode: .fill)
                 .frame(width: coverImageSize, height: coverImageSize)
-                .cornerRadius(15)
+                .cornerRadius(16)
                 .overlay(
                     RoundedRectangle(cornerRadius: 15)
                         .stroke(Color("TextColor"), lineWidth: 1)

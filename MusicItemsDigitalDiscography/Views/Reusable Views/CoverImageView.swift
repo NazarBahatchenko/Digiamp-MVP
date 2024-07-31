@@ -13,11 +13,12 @@ struct CoverImageView: View {
     @State private var imageScale: CGFloat = 1.2
     @State private var rotationAngles: [Double] = Array(repeating: 0.0, count: 4)
     @State private var mainImageRotationAngle: Double = 0.0
+    @State private var privateNoteRotationAngle: Double = 0.0
 
     var body: some View {
         ZStack {
             ForEach(0..<4, id: \.self) { index in
-                RoundedRectangle(cornerRadius: 7)
+                RoundedRectangle(cornerRadius: 8)
                     .frame(width: 250, height: 250)
                     .foregroundStyle(Color("TextColor")).opacity(0.2)
                     .rotationEffect(Angle(degrees: rotationAngles[index]))
@@ -32,7 +33,7 @@ struct CoverImageView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 250, height: 250)
-                .cornerRadius(15)
+                .cornerRadius(16)
                 .clipped()
                 .scaleEffect(imageScale)
                 .rotationEffect(Angle(degrees: mainImageRotationAngle))

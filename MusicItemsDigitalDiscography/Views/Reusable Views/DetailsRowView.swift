@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailsRowView: View {
     var name: String
-    var text: String
+    var text: String = "N/A"
     var lineLimit: Int
 
     var body: some View {

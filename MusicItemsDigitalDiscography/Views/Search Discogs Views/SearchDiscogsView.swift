@@ -11,7 +11,7 @@ import Kingfisher
 struct SearchDiscogsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var viewModel: DiscogsAPIViewModel
-
+    
     var body: some View {
         ZStack {
             Color("MainColor").ignoresSafeArea(.all)
@@ -39,7 +39,7 @@ struct SearchDiscogsView: View {
             .navigationBarTitle("Discogs Catalog", displayMode: .inline)
         }
     }
-
+    
     private var backButton: some View {
         Button(action: {
             presentationMode.wrappedValue.dismiss()

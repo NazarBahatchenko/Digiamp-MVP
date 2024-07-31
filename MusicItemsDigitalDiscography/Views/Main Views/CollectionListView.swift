@@ -17,9 +17,10 @@ struct CollectionListView: View {
     @State private var isPresentingScanner = false
     @State private var isPresentedSettingsSheet = false
     @State private var isPresentedTrashSheet = false
+    @State private var isPresentedReviewSheet  = false
     @State private var scannedCode: String?
-    @State private var isPresentingAddMusicItem = false // State variable for AddMusicItemView
-    @State private var isPresentingSearchDiscogs = false // State variable for SearchDiscogsView
+    @State private var isPresentingAddMusicItem = false
+    @State private var isPresentingSearchDiscogs = false
     
     var columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
@@ -33,7 +34,7 @@ struct CollectionListView: View {
                     Spacer(minLength: 10)
                     LazyVGrid(columns: columns, spacing: 5) {
                         ForEach(viewModel.musicItems, id: \.id) { item in
-                            NavigationLink(destination: MusicItemDetailView(musicItem: item)) {
+                            NavigationLink(destination: MusicItemDetailView(musicItem: item, musicItemViewModel: viewModel)) {
                                 MusicItemGrid(item: item, viewModel: FirestoreViewModel(), musicItemViewModel: MusicItemViewModel())
                                     .shadow(color: Color.black.opacity(0.3), radius: 2)
                             }
@@ -59,6 +60,12 @@ struct CollectionListView: View {
                             }) {
                                 Label("Trash", systemImage: "trash")
                             }
+                            Button(action: {
+                                isPresentedReviewSheet = true
+                                impactFeedback(style: .light)
+                            }) {
+                                Label("Review Test Screen", systemImage: "star")
+                            }
                         } label: {
                             Image(systemName: "ellipsis.circle")
                         }
@@ -70,7 +77,7 @@ struct CollectionListView: View {
                         Button {
                             print("Top Button in Nav Bar is tapped")
                         } label: {
-                            Image("LogInViewImage")
+                            Image("collection_view_logo_50x50")
                                 .resizable()
                                 .frame(width: 35, height: 35)
                                 .cornerRadius(5)
@@ -117,7 +124,7 @@ struct CollectionListView: View {
                 SearchDiscogsView(viewModel: discogsViewModel)
             }
             .navigationDestination(for: MusicItem.self) { item in
-                MusicItemDetailView(musicItem: item)
+                MusicItemDetailView(musicItem: item, musicItemViewModel: viewModel)
             }
         }
     }
@@ -163,8 +170,6 @@ struct CollectionListView: View {
         generator.impactOccurred()
     }
 }
-
-
 
 enum NavigationDestination: Hashable {
     case addMusicItem

@@ -2,7 +2,7 @@
 //  TrashView.swift
 //  MusicItemsDigitalDiscography
 //
-//  Created by Nazar Bahatchenko on 03.05.2024.
+//  Created by Nazar Bahatchenko
 //
 
 import SwiftUI
@@ -21,7 +21,7 @@ struct TrashView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 15) {
                     ForEach(viewModel.musicItems, id: \.id) { item in
-                        NavigationLink(destination: MusicItemDetailView(musicItem: item)) {
+                        NavigationLink(destination: MusicItemDetailView(musicItem: item, musicItemViewModel: MusicItemViewModel())) {
                             MusicItemInTrashGridView(item: item, viewModel: FirestoreViewModel(), musicItemViewModel: MusicItemViewModel())
                                 .shadow(color: Color.black.opacity(0.3), radius: 2)
                         }
@@ -40,7 +40,7 @@ struct TrashView: View {
             .navigationBarItems(trailing: Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }) {
-                Image(systemName: "xmark") // Custom close button
+                Image(systemName: "xmark")
             })
         }
     }

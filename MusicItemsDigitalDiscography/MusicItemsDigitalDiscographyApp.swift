@@ -2,17 +2,15 @@
 //  MusicItemsDigitalDiscographyApp.swift
 //  MusicItemsDigitalDiscography
 //
-//  Created by Nazar Bahatchenko on 20.04.2024.
+//  Created by Nazar Bahatchenko
 //
-
 import SwiftUI
 import FirebaseCore
 import Firebase
 import GoogleSignIn
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication,didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         return true
     }
@@ -50,9 +48,10 @@ struct MusicItemsDigitalDiscographyApp: App {
                     }
                 } else {
                     LogInView(viewModel: authViewModel)
+                        .environmentObject(authViewModel)
+                        .environmentObject(userViewModel)
                 }
             }
         }
     }
 }
-

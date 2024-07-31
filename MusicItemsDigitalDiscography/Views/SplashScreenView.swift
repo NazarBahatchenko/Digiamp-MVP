@@ -11,7 +11,6 @@ struct SplashScreenView: View {
     var body: some View {
         ZStack {
             Color("SystemWhite").ignoresSafeArea(.all)
-            
             VStack() {
                 Spacer()
                 Image("LogInViewImage")
@@ -22,8 +21,4 @@ struct SplashScreenView: View {
             }
         }
     }
-}
-
-#Preview {
-    SplashScreenView()
 }

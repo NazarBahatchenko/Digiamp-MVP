@@ -30,7 +30,7 @@ struct LogInView: View {
                         Spacer()
                         Image("LogInViewImage")
                             .resizable()
-                            .cornerRadius(15)
+                            .cornerRadius(16)
                             .frame(width: 200, height: 200)
                             .shadow(radius: 5)
                         Text("Digiamp")
