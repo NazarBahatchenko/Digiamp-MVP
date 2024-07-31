@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		780B69232C4F7F910069B1E1 /* RateWithStarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780B69222C4F7F910069B1E1 /* RateWithStarsView.swift */; };
 		780B69302C4FE5F70069B1E1 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780B692F2C4FE5F70069B1E1 /* ImagePickerView.swift */; };
 		780B69322C4FED240069B1E1 /* ShowDetailsButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780B69312C4FED240069B1E1 /* ShowDetailsButtonView.swift */; };
 		7824AD812BF3D33800B549C8 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7824AD802BF3D33800B549C8 /* SplashScreenView.swift */; };
@@ -64,7 +63,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		780B69222C4F7F910069B1E1 /* RateWithStarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateWithStarsView.swift; sourceTree = "<group>"; };
 		780B692F2C4FE5F70069B1E1 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		780B69312C4FED240069B1E1 /* ShowDetailsButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowDetailsButtonView.swift; path = "Reusable Views/ShowDetailsButtonView.swift"; sourceTree = "<group>"; };
 		782460D12BEE24AC009C7802 /* MusicItemsDigitalDiscography.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicItemsDigitalDiscography.entitlements; sourceTree = "<group>"; };
@@ -188,7 +186,6 @@
 			isa = PBXGroup;
 			children = (
 				780B692F2C4FE5F70069B1E1 /* ImagePickerView.swift */,
-				780B69222C4F7F910069B1E1 /* RateWithStarsView.swift */,
 				78D8B6682BE2E04F00D763F7 /* CustomActionButton.swift */,
 				78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */,
 				78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */,
@@ -373,7 +370,6 @@
 			files = (
 				78AA302F2BFB79EC00301AA8 /* DetailedAPIMusicItem.swift in Sources */,
 				785D56702BE55B4700CFB91B /* DetailsRowView.swift in Sources */,
-				780B69232C4F7F910069B1E1 /* RateWithStarsView.swift in Sources */,
 				789C5E7F2BE4EEC200638C2F /* NetworkService.swift in Sources */,
 				780B69302C4FE5F70069B1E1 /* ImagePickerView.swift in Sources */,
 				785D929C2BDA3CF4006C3D6E /* CollectionListView.swift in Sources */,

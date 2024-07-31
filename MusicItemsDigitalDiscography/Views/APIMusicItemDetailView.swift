@@ -12,8 +12,8 @@ struct APIMusicItemDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject private var addMusicItemViewModel = FirestoreViewModel()
     @StateObject private var discogsAPIViewModel = DiscogsAPIViewModel()
-    @State private var showDetails = false // State to toggle details visibility
-
+    @State private var showDetails = false
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -38,18 +38,17 @@ struct APIMusicItemDetailView: View {
                             Divider()
                                 .background(Color("AccentColor"))
                                 .padding(.vertical, 5)
-                            DetailsRowView(name: "YEAR", text: APIMusicItem.year ?? "N/A", lineLimit: 1)
-                            DetailsRowView(name: "COUNTRY", text: APIMusicItem.country ?? "N/A", lineLimit: 1)
-                            DetailsRowView(name: "GENRE", text: APIMusicItem.genre?.joined(separator: ", ") ?? "N/A", lineLimit: 1)
-                            DetailsRowView(name: "STYLE", text: APIMusicItem.style?.joined(separator: ", ") ?? "N/A", lineLimit: 1)
+                            DetailsRowView(name: "YEAR", text: APIMusicItem.year?.isEmpty == false ? APIMusicItem.year! : "No Data", lineLimit: 1)
+                            DetailsRowView(name: "COUNTRY", text: APIMusicItem.country?.isEmpty == false ? APIMusicItem.country! : "No Data", lineLimit: 1)
+                            DetailsRowView(name: "GENRE", text: APIMusicItem.genre?.isEmpty == false ? APIMusicItem.genre!.joined(separator: ", ") : "No Data", lineLimit: 1)
+                            DetailsRowView(name: "STYLE", text: APIMusicItem.style?.isEmpty == false ? APIMusicItem.style!.joined(separator: ", ") : "No Data", lineLimit: 1)
                             Divider()
                                 .background(Color("AccentColor"))
                                 .padding(.vertical, 5)
-                            DetailsRowView(name: "LABEL", text: APIMusicItem.label?.joined(separator: ", ") ?? "N/A", lineLimit: 2)
-                            DetailsRowView(name: "CATALOG NUMBER", text: APIMusicItem.catno ?? "N/A", lineLimit: 2)
-                            DetailsRowView(name: "BARCODE", text: APIMusicItem.barcode?.joined(separator: ", ") ?? "N/A", lineLimit: 2)
+                            DetailsRowView(name: "LABEL", text: APIMusicItem.label?.isEmpty == false ? APIMusicItem.label!.joined(separator: ", ") : "No Data", lineLimit: 2)
+                            DetailsRowView(name: "CATALOG NUMBER", text: APIMusicItem.catno?.isEmpty == false ? APIMusicItem.catno! : "No Data", lineLimit: 2)
+                            DetailsRowView(name: "BARCODE", text: APIMusicItem.barcode?.isEmpty == false ? APIMusicItem.barcode!.joined(separator: ", ") : "No Data", lineLimit: 2)
                         }
-                        
                         Divider()
                             .background(Color("AccentColor"))
                             .padding(.vertical, 5)
@@ -75,8 +74,6 @@ struct APIMusicItemDetailView: View {
                                 .frame(width: 320, height: 50)
                             }
                         }
-                        
-                        // Display tracklist and videos if showDetails is true
                         if showDetails {
                             VStack(alignment: .leading, spacing: 5) {
                                 if let detailedItem = discogsAPIViewModel.detailedMusicItems[APIMusicItem.id] {
@@ -86,14 +83,14 @@ struct APIMusicItemDetailView: View {
                                             .foregroundStyle(Color("TextColor")).opacity(0.7)
                                         ForEach(tracklist, id: \.self) { track in
                                             HStack {
-                                                Text("\(track.position ?? "")")
+                                                Text("\(track.position ?? "-")")
                                                     .font(.custom("Poppins-Regular", size: 16))
                                                     .foregroundStyle(Color("TextColor"))
                                                     .lineLimit(1)
                                                     .frame(width: 20)
                                                     .padding(.bottom, 3)
                                                 
-                                                Text("\(track.title ?? "")")
+                                                Text("\(track.title ?? "-")")
                                                     .font(.custom("Poppins-Regular", size: 16))
                                                     .foregroundStyle(Color("TextColor"))
                                                     .lineLimit(2)
@@ -102,13 +99,11 @@ struct APIMusicItemDetailView: View {
                                                 
                                                 Spacer()
                                                 
-                                                if track.duration != nil {
-                                                    Text("[\(track.duration ?? "N/A")]")
-                                                        .font(.custom("Poppins-Regular", size: 16))
-                                                        .foregroundStyle(Color("TextColor"))
-                                                        .lineLimit(1)
-                                                        .padding(.bottom, 3)
-                                                }
+                                                Text(track.duration?.isEmpty == false ? "[\(track.duration!)]" : "[00:00]")
+                                                    .font(.custom("Poppins-Regular", size: 16))
+                                                    .foregroundStyle(Color("TextColor"))
+                                                    .lineLimit(1)
+                                                    .padding(.bottom, 3)
                                             }
                                         }
                                     } else {
@@ -147,6 +142,7 @@ struct APIMusicItemDetailView: View {
                         }
                     }
                     .padding(.horizontal, 20)
+                    
                 }
                 Spacer(minLength: 50)
             }

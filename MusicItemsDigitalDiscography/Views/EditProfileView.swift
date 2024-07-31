@@ -22,7 +22,7 @@ struct EditProfileView: View {
                 CustomTextFieldView(text: $displayName, textFieldTitle: "Display Name", isNumeric: false)
                 CustomTextFieldView(text: $bio, textFieldTitle: "Bio", isNumeric: false)
                 
-                CustomButtonFullScreen(
+                CustomActionButton(
                            action: saveChanges,
                            buttonText: "Save Changes")
             }
