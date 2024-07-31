@@ -4,7 +4,7 @@
 //
 //  Created by Nazar Bahatchenko on 25.04.2024.
 //
-
+import SwiftUI
 import Foundation
 import Firebase
 import FirebaseFirestore
@@ -17,6 +17,7 @@ class MusicItemViewModel: ObservableObject {
     private var listenerRegistration: ListenerRegistration?
     
     var isLoading = false
+    @State var showSuccessView = false
     
     init() {
         fetchMusicItemsInCollectionView()
@@ -143,61 +144,39 @@ class MusicItemViewModel: ObservableObject {
         }
     }
     
-    // Methods to update links, private notes, and user ratings
-    func updateMusicItemLinks(itemId: String, links: [String]) async {
+    func addPrivateNoteToMusicItem(itemId: String, reviewText: String) async {
         guard let userId = Auth.auth().currentUser?.uid else {
             print("User not authenticated")
             return
         }
-        
         let itemRef = Firestore.firestore().collection("users")
             .document(userId)
             .collection("userMusicItems")
             .document(itemId)
-        
         do {
-            try await itemRef.updateData(["links": links])
-            print("Links successfully updated")
+            try await itemRef.updateData([
+                "privateNote": reviewText,
+                "lastEdited": FieldValue.serverTimestamp()
+            ])
+            print("Review successfully updated. Item ID: \(itemRef.documentID)")
         } catch {
-            print("Error updating links: \(error.localizedDescription)")
+            print("Error updating review: \(error.localizedDescription)")
         }
     }
-    
-    func updateMusicItemPrivateNote(itemId: String, privateNote: String) async {
+    func deletePrivateNoteOfMusicItem(itemId: String) async {
         guard let userId = Auth.auth().currentUser?.uid else {
             print("User not authenticated")
             return
         }
-        
         let itemRef = Firestore.firestore().collection("users")
             .document(userId)
             .collection("userMusicItems")
             .document(itemId)
-        
         do {
-            try await itemRef.updateData(["privateNote": privateNote])
-            print("Private note successfully updated")
+            try await itemRef.updateData(["privateNote": FieldValue.delete()])
+            print("Private note successfully deleted")
         } catch {
-            print("Error updating private note: \(error.localizedDescription)")
-        }
-    }
-    
-    func updateMusicItemUserRating(itemId: String, userRating: Int) async {
-        guard let userId = Auth.auth().currentUser?.uid else {
-            print("User not authenticated")
-            return
-        }
-        
-        let itemRef = Firestore.firestore().collection("users")
-            .document(userId)
-            .collection("userMusicItems")
-            .document(itemId)
-        
-        do {
-            try await itemRef.updateData(["userRating": userRating])
-            print("User rating successfully updated")
-        } catch {
-            print("Error updating user rating: \(error.localizedDescription)")
+            print("Error deleting private note: \(error.localizedDescription)")
         }
     }
 }
