@@ -16,18 +16,14 @@ import UniformTypeIdentifiers
 class FirestoreViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var alertMessage: String?
-    
-    private let db = Firestore.firestore()
+    private let database = Firestore.firestore()
     private let storageRef = Storage.storage().reference()
     private let storage = Storage.storage()
-    
     @Published var genres = [String]()
     @Published var countries = [String]()
     @Published var styles = [String]()
-    @Published var uploadStatus: String? // To relay upload status to the UI
-    
-    init() {
-        loadStyles()
+    @Published var uploadStatus: String?
+    init() { loadStyles()
         loadGenres()
         loadCountries()
     }
@@ -68,7 +64,6 @@ class FirestoreViewModel: ObservableObject {
             
         ]
     }
-    
     private func loadStyles() {
         styles = [
             // Populate the array with all styles
@@ -105,45 +100,35 @@ class FirestoreViewModel: ObservableObject {
             "Merengue", "Bossa Nova", "Speed Metal", "Dub Techno", "Gabber", "Kayōkyoku",
             "Thug Rap", "Breakcore", "Hi NRG", "Neo-Classical", "Poetry"]
     }
-    
     private func loadGenres() {
         genres = ["Rock", "Electronic", "Pop", "Folk, World, & Country", "Jazz", "Funk / Soul", "Classical", "Hip Hop", "Latin", "Stage & Screen", "Reggae", "Blues", "Non-Music", "Children's", "Brass & Military"]
     }
-    
-    // Method to add a music item with cover image
     func addMusicItemWithImage(ownerUID: String, title: String, year: String, country: String, label: String, genre: String, style: String, barcode: String, catno: String, imageData: Data?, isPublic: Bool, inTrash: Bool, retryCount: Int = 3) async {
-        isLoading = true
-        
+        isLoading = true        
         // Check if image data is provided, if not, create Music Item without an image
         guard let imageData = imageData else {
             await createMusicItem(ownerUID: ownerUID, title: title, year: year, country: country, label: label, genre: genre, style: style, barcode: barcode, catno: catno, coverImageUrl: nil, isPublic: isPublic, inTrash: inTrash)
             return
         }
-        
         // Reference to the image location in Firebase Storage
         let imageRef = storageRef.child("images/\(ownerUID)/\(UUID().uuidString).jpg")
-        
         for attempt in 1...retryCount {
             do {
                 // Attempt to upload the image
                 _ = try await imageRef.putDataAsync(imageData)
                 // Get the URL for the uploaded image
                 let coverImageUrl = try await imageRef.downloadURL().absoluteString
-                
                 // Create the MusicItem with the obtained cover image URL
                 await createMusicItem(ownerUID: ownerUID, title: title, year: year, country: country, label: label, genre: genre, style: style, barcode: barcode, catno: catno, coverImageUrl: coverImageUrl, isPublic: isPublic, inTrash: inTrash)
                 return
-                
             } catch {
                 print("Attempt \(attempt) failed with error: \(error.localizedDescription)")
-                
                 if attempt == retryCount {
                     print("Max retry attempts reached. Unable to upload image.")
                     alertMessage = "Error uploading image after \(retryCount) attempts: \(error.localizedDescription)"
                     isLoading = false
                     return
                 }
-                
                 do {
                     // Retry after 2 seconds if an error occurs
                     try await Task.sleep(nanoseconds: UInt64(2_000_000_000))
@@ -154,11 +139,9 @@ class FirestoreViewModel: ObservableObject {
             }
         }
     }
-    
     // Helper method to create the music item in Firestore
     private func createMusicItem(ownerUID: String, title: String, year: String, country: String, label: String?, genre: String?, style: String?, barcode: String?, catno: String?, coverImageUrl: String?, isPublic: Bool, inTrash: Bool) async {
-        let musicItemRef = db.collection("users").document(ownerUID).collection("userMusicItems").document()
-        
+        let musicItemRef = database.collection("users").document(ownerUID).collection("userMusicItems").document()
         var data: [String: Any] = [
             "id": musicItemRef.documentID,
             "ownerUID": ownerUID,
@@ -174,14 +157,12 @@ class FirestoreViewModel: ObservableObject {
             "format": [],
             "inTrash": inTrash
         ]
-        
         // Add optional fields only if they have values, converting to arrays where needed
         if let label = label, !label.isEmpty { data["label"] = [label] }
         if let genre = genre, !genre.isEmpty { data["genre"] = [genre] }
         if let style = style, !style.isEmpty { data["style"] = [style] }
         if let barcode = barcode, !barcode.isEmpty { data["barcode"] = barcode }
         if let catno = catno, !catno.isEmpty { data["catno"] = catno }
-        
         do {
             // Set data to Firestore
             try await musicItemRef.setData(data)
@@ -191,20 +172,15 @@ class FirestoreViewModel: ObservableObject {
             print("Firestore write error: \(error.localizedDescription)")
             alertMessage = "Error writing document: \(error.localizedDescription)"
         }
-        
         isLoading = false
     }
-    
-    
     // Asynchronous method to delete a music item, including its cover image from Firebase Storage
     func deleteMusicItem(itemId: String, ownerUID: String, coverImageUrl: String?) async {
-        let userMusicItemsRef = db.collection("users").document(ownerUID).collection("userMusicItems")
-        
+        let userMusicItemsRef = database.collection("users").document(ownerUID).collection("userMusicItems")
         // Attempt to delete the music item document from Firestore
         do {
             try await userMusicItemsRef.document(itemId).delete()
             print("Successfully deleted Firestore document with ID: \(itemId)")
-            
             // If cover image URL exists, attempt to delete the image from Firebase Storage
             if let coverImageUrl = coverImageUrl, !coverImageUrl.isEmpty {
                 if coverImageUrl.contains("firebasestorage.googleapis.com") {
@@ -231,76 +207,67 @@ class FirestoreViewModel: ObservableObject {
             print("Error removing document from Firestore: \(error.localizedDescription)")
         }
     }
-
     func convertAndSaveToFirestore(apiMusicItem: APIMusicItem, ownerUID: String) async {
-            // Fetch detailed information
-            guard let resourceUrl = apiMusicItem.resourceUrl else {
-                print("Resource URL is missing")
-                return
-            }
-            
-            let detailedItem: DetailedAPIMusicItem
-            do {
-                detailedItem = try await fetchDetailedMusicItem(resourceUrl: resourceUrl)
-            } catch {
-                print("Error fetching detailed music item: \(error.localizedDescription)")
-                return
-            }
-
-            // Convert DetailedAPIMusicItem.Track to MusicItem.Track
-            let tracklist: [MusicItem.Track]? = detailedItem.tracklist?.map {
-                MusicItem.Track(position: $0.position, title: $0.title, duration: $0.duration)
-            }
-            
-            // Convert DetailedAPIMusicItem.Video to MusicItem.Video
-            let videos: [MusicItem.Video]? = detailedItem.videos?.map {
-                MusicItem.Video(uri: $0.uri, title: $0.title)
-            }
-
-            // Save the MusicItem to Firestore, let Firestore automatically generate an ID
-            let musicItemsRef = db.collection("users").document(ownerUID).collection("userMusicItems")
-
-            let musicItem = MusicItem(
-                id: "", // Placeholder value, Firestore will assign a proper value
-                addedDate: Date(),
-                barcode: apiMusicItem.barcode?.first,
-                catno: apiMusicItem.catno,
-                country: apiMusicItem.country,
-                coverImage: apiMusicItem.coverImage ?? apiMusicItem.thumb,
-                format: apiMusicItem.format,
-                genre: apiMusicItem.genre,
-                isPublic: false, // Adjust this according to your requirements
-                label: apiMusicItem.label,
-                lastEdited: Date(),
-                ownerUID: ownerUID,
-                resourceUrl: apiMusicItem.resourceUrl,
-                style: apiMusicItem.style,
-                thumb: apiMusicItem.thumb,
-                title: apiMusicItem.title,
-                uri: apiMusicItem.uri,
-                year: apiMusicItem.year,
-                inTrash: false,
-                links: [],
-                privateNote: "",
-                userRating: 0,
-                tracklist: tracklist,
-                videos: videos
-            )
-
-            do {
-                let documentReference = try musicItemsRef.addDocument(from: musicItem)
-                print("Music item added successfully with ID: \(documentReference.documentID)")
-            } catch {
-                print("Error saving MusicItem to Firestore: \(error.localizedDescription)")
-            }
+        // Fetch detailed information
+        guard let resourceUrl = apiMusicItem.resourceUrl else {
+            print("Resource URL is missing")
+            return
         }
+        let detailedItem: DetailedAPIMusicItem
+        do {
+            detailedItem = try await fetchDetailedMusicItem(resourceUrl: resourceUrl)
+        } catch {
+            print("Error fetching detailed music item: \(error.localizedDescription)")
+            return
+        }
+        // Convert DetailedAPIMusicItem.Track to MusicItem.Track
+        let tracklist: [MusicItem.Track]? = detailedItem.tracklist?.map {
+            MusicItem.Track(position: $0.position, title: $0.title, duration: $0.duration)
+        }
+        // Convert DetailedAPIMusicItem.Video to MusicItem.Video
+        let videos: [MusicItem.Video]? = detailedItem.videos?.map {
+            MusicItem.Video(uri: $0.uri, title: $0.title)
+        }
+        // Save the MusicItem to Firestore, let Firestore automatically generate an ID
+        let musicItemsRef = database.collection("users").document(ownerUID).collection("userMusicItems")
         
-        // Method to fetch detailed music item
-        private func fetchDetailedMusicItem(resourceUrl: String) async throws -> DetailedAPIMusicItem {
-            let data = try await NetworkService().fetchData(from: resourceUrl)
-            let decodedResponse = try JSONDecoder().decode(DetailedAPIMusicItem.self, from: data)
-            return decodedResponse
+        let musicItem = MusicItem(
+            id: "", // Placeholder value, Firestore will assign a proper value
+            addedDate: Date(),
+            barcode: apiMusicItem.barcode?.first,
+            catno: apiMusicItem.catno,
+            country: apiMusicItem.country,
+            coverImage: apiMusicItem.coverImage ?? apiMusicItem.thumb,
+            format: apiMusicItem.format,
+            genre: apiMusicItem.genre,
+            isPublic: false,
+            label: apiMusicItem.label,
+            lastEdited: Date(),
+            ownerUID: ownerUID,
+            resourceUrl: apiMusicItem.resourceUrl,
+            style: apiMusicItem.style,
+            thumb: apiMusicItem.thumb,
+            title: apiMusicItem.title,
+            uri: apiMusicItem.uri,
+            year: apiMusicItem.year,
+            inTrash: false,
+            links: [],
+            privateNote: "",
+            userRating: 0,
+            tracklist: tracklist,
+            videos: videos
+        )
+        do {
+            let documentReference = try musicItemsRef.addDocument(from: musicItem)
+            print("Music item added successfully with ID: \(documentReference.documentID)")
+        } catch {
+            print("Error saving MusicItem to Firestore: \(error.localizedDescription)")
         }
-    
+    }
+    // Method to fetch detailed music item
+    private func fetchDetailedMusicItem(resourceUrl: String) async throws -> DetailedAPIMusicItem {
+        let data = try await NetworkService().fetchData(from: resourceUrl)
+        let decodedResponse = try JSONDecoder().decode(DetailedAPIMusicItem.self, from: data)
+        return decodedResponse
+    }
 }
-
