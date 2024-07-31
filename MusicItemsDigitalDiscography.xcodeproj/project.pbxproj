@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		780B69232C4F7F910069B1E1 /* RateWithStarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780B69222C4F7F910069B1E1 /* RateWithStarsView.swift */; };
+		780B69302C4FE5F70069B1E1 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780B692F2C4FE5F70069B1E1 /* ImagePickerView.swift */; };
+		780B69322C4FED240069B1E1 /* ShowDetailsButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780B69312C4FED240069B1E1 /* ShowDetailsButtonView.swift */; };
 		7824AD812BF3D33800B549C8 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7824AD802BF3D33800B549C8 /* SplashScreenView.swift */; };
 		783A84732C01411300CF56FF /* CoverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783A84722C01411300CF56FF /* CoverImageView.swift */; };
 		785D566E2BE51E0100CFB91B /* MusicItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D566D2BE51E0100CFB91B /* MusicItemDetailView.swift */; };
@@ -51,14 +54,19 @@
 		78B636552BD39E6500004EE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78B636542BD39E6500004EE7 /* GoogleService-Info.plist */; };
 		78B636582BD3A13000004EE7 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B636572BD3A13000004EE7 /* AuthenticationViewModel.swift */; };
 		78B6365A2BD3A1BE00004EE7 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B636592BD3A1BE00004EE7 /* LogInView.swift */; };
+		78D2A83A2C5795FB009EA8FE /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78D2A8392C5793C6009EA8FE /* Configuration.plist */; };
+		78D2A83C2C592B3D009EA8FE /* PrivateNoteOnTopOfCoverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D2A83B2C592B3C009EA8FE /* PrivateNoteOnTopOfCoverImageView.swift */; };
 		78D8B6652BE2DF4E00D763F7 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */; };
 		78D8B6672BE2E00D00D763F7 /* SearchablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */; };
-		78D8B6692BE2E04F00D763F7 /* CustomButtonFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6682BE2E04F00D763F7 /* CustomButtonFullScreen.swift */; };
-		78E8B7FE2BFF4F1D0094AC28 /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78E8B7FD2BFF4F1D0094AC28 /* Configuration.plist */; };
+		78D8B6692BE2E04F00D763F7 /* CustomActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6682BE2E04F00D763F7 /* CustomActionButton.swift */; };
 		78E8B8002BFF57290094AC28 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8B7FF2BFF57290094AC28 /* Configuration.swift */; };
+		78EB692D2C0F29C900DECF9E /* AddPrivateNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EB692C2C0F29C900DECF9E /* AddPrivateNoteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		780B69222C4F7F910069B1E1 /* RateWithStarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateWithStarsView.swift; sourceTree = "<group>"; };
+		780B692F2C4FE5F70069B1E1 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		780B69312C4FED240069B1E1 /* ShowDetailsButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowDetailsButtonView.swift; path = "Reusable Views/ShowDetailsButtonView.swift"; sourceTree = "<group>"; };
 		782460D12BEE24AC009C7802 /* MusicItemsDigitalDiscography.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicItemsDigitalDiscography.entitlements; sourceTree = "<group>"; };
 		7824AD802BF3D33800B549C8 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		783A84722C01411300CF56FF /* CoverImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverImageView.swift; sourceTree = "<group>"; };
@@ -97,11 +105,13 @@
 		78B636562BD39EFB00004EE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		78B636572BD3A13000004EE7 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		78B636592BD3A1BE00004EE7 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		78D2A8392C5793C6009EA8FE /* Configuration.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Configuration.plist; sourceTree = "<group>"; };
+		78D2A83B2C592B3C009EA8FE /* PrivateNoteOnTopOfCoverImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateNoteOnTopOfCoverImageView.swift; sourceTree = "<group>"; };
 		78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
 		78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePicker.swift; sourceTree = "<group>"; };
-		78D8B6682BE2E04F00D763F7 /* CustomButtonFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonFullScreen.swift; sourceTree = "<group>"; };
-		78E8B7FD2BFF4F1D0094AC28 /* Configuration.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Configuration.plist; sourceTree = "<group>"; };
+		78D8B6682BE2E04F00D763F7 /* CustomActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionButton.swift; sourceTree = "<group>"; };
 		78E8B7FF2BFF57290094AC28 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		78EB692C2C0F29C900DECF9E /* AddPrivateNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPrivateNoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +169,9 @@
 				785D924A2BD960A6006C3D6E /* EditProfileView.swift */,
 				789C5E892BE4F17000638C2F /* APIMusicItemDetailView.swift */,
 				785D566D2BE51E0100CFB91B /* MusicItemDetailView.swift */,
+				780B69312C4FED240069B1E1 /* ShowDetailsButtonView.swift */,
 				7824AD802BF3D33800B549C8 /* SplashScreenView.swift */,
+				78EB692C2C0F29C900DECF9E /* AddPrivateNoteView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -175,7 +187,9 @@
 		789C5E752BE4EAE000638C2F /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
-				78D8B6682BE2E04F00D763F7 /* CustomButtonFullScreen.swift */,
+				780B692F2C4FE5F70069B1E1 /* ImagePickerView.swift */,
+				780B69222C4F7F910069B1E1 /* RateWithStarsView.swift */,
+				78D8B6682BE2E04F00D763F7 /* CustomActionButton.swift */,
 				78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */,
 				78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */,
 				789C5E782BE4ED8600638C2F /* MusicItemGrid.swift */,
@@ -183,6 +197,7 @@
 				785D566F2BE55B4700CFB91B /* DetailsRowView.swift */,
 				788A86442BF115B100135923 /* APIMusicItemCellView.swift */,
 				783A84722C01411300CF56FF /* CoverImageView.swift */,
+				78D2A83B2C592B3C009EA8FE /* PrivateNoteOnTopOfCoverImageView.swift */,
 			);
 			path = "Reusable Views";
 			sourceTree = "<group>";
@@ -241,6 +256,7 @@
 				782460D12BEE24AC009C7802 /* MusicItemsDigitalDiscography.entitlements */,
 				78B636542BD39E6500004EE7 /* GoogleService-Info.plist */,
 				78B636562BD39EFB00004EE7 /* Info.plist */,
+				78D2A8392C5793C6009EA8FE /* Configuration.plist */,
 				78B636082BD39A3E00004EE7 /* MusicItemsDigitalDiscographyApp.swift */,
 				785D92472BD95EC1006C3D6E /* Views */,
 				785D92422BD90441006C3D6E /* View-Models */,
@@ -249,7 +265,6 @@
 				78B6360C2BD39A3F00004EE7 /* Assets.xcassets */,
 				789C5E762BE4EB6800638C2F /* Fonts */,
 				78B6360E2BD39A3F00004EE7 /* Preview Content */,
-				78E8B7FD2BFF4F1D0094AC28 /* Configuration.plist */,
 			);
 			path = MusicItemsDigitalDiscography;
 			sourceTree = "<group>";
@@ -276,6 +291,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				780B692E2C4FE2FE0069B1E1 /* PBXTargetDependency */,
 			);
 			name = MusicItemsDigitalDiscography;
 			packageProductDependencies = (
@@ -323,6 +339,7 @@
 				785D929F2BDA3D2E006C3D6E /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				785D92A42BDA3E38006C3D6E /* XCRemoteSwiftPackageReference "CodeScanner" */,
 				786E0BD12BEE512A008EAACC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				780B692C2C4FE2880069B1E1 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 78B636062BD39A3E00004EE7 /* Products */;
 			projectDirPath = "";
@@ -341,7 +358,7 @@
 				78B636102BD39A3F00004EE7 /* Preview Assets.xcassets in Resources */,
 				78B6360D2BD39A3F00004EE7 /* Assets.xcassets in Resources */,
 				78B636552BD39E6500004EE7 /* GoogleService-Info.plist in Resources */,
-				78E8B7FE2BFF4F1D0094AC28 /* Configuration.plist in Resources */,
+				78D2A83A2C5795FB009EA8FE /* Configuration.plist in Resources */,
 				788A86472BF1495800135923 /* PrivacyInfo.xcprivacy in Resources */,
 				789C5E772BE4EB6800638C2F /* Fonts in Resources */,
 			);
@@ -356,7 +373,9 @@
 			files = (
 				78AA302F2BFB79EC00301AA8 /* DetailedAPIMusicItem.swift in Sources */,
 				785D56702BE55B4700CFB91B /* DetailsRowView.swift in Sources */,
+				780B69232C4F7F910069B1E1 /* RateWithStarsView.swift in Sources */,
 				789C5E7F2BE4EEC200638C2F /* NetworkService.swift in Sources */,
+				780B69302C4FE5F70069B1E1 /* ImagePickerView.swift in Sources */,
 				785D929C2BDA3CF4006C3D6E /* CollectionListView.swift in Sources */,
 				789C5E792BE4ED8600638C2F /* MusicItemGrid.swift in Sources */,
 				789C5E8A2BE4F17000638C2F /* APIMusicItemDetailView.swift in Sources */,
@@ -364,8 +383,9 @@
 				789C5E862BE4F07500638C2F /* SearchBarView.swift in Sources */,
 				785D924B2BD960A6006C3D6E /* EditProfileView.swift in Sources */,
 				785D56722BE69EB300CFB91B /* MusicItemInTrashGridView.swift in Sources */,
+				78EB692D2C0F29C900DECF9E /* AddPrivateNoteView.swift in Sources */,
 				789C5E8C2BE5154600638C2F /* APIMusicItem.swift in Sources */,
-				78D8B6692BE2E04F00D763F7 /* CustomButtonFullScreen.swift in Sources */,
+				78D8B6692BE2E04F00D763F7 /* CustomActionButton.swift in Sources */,
 				78D8B6652BE2DF4E00D763F7 /* CustomTextFieldView.swift in Sources */,
 				78B6365A2BD3A1BE00004EE7 /* LogInView.swift in Sources */,
 				789C5E7B2BE4EE0D00638C2F /* TrashView.swift in Sources */,
@@ -376,10 +396,12 @@
 				7824AD812BF3D33800B549C8 /* SplashScreenView.swift in Sources */,
 				78B636172BD39A8900004EE7 /* UIApplication+RootViewController.swift in Sources */,
 				78B6360B2BD39A3E00004EE7 /* ContentView.swift in Sources */,
+				780B69322C4FED240069B1E1 /* ShowDetailsButtonView.swift in Sources */,
 				785D566E2BE51E0100CFB91B /* MusicItemDetailView.swift in Sources */,
 				785D92A32BDA3D4C006C3D6E /* MusicItem.swift in Sources */,
 				785D92492BD95F1C006C3D6E /* SettingsRootView.swift in Sources */,
 				785D92442BD9046C006C3D6E /* DigiapmUser.swift in Sources */,
+				78D2A83C2C592B3D009EA8FE /* PrivateNoteOnTopOfCoverImageView.swift in Sources */,
 				78D8B6672BE2E00D00D763F7 /* SearchablePicker.swift in Sources */,
 				785D92462BD905E6006C3D6E /* UserViewModel.swift in Sources */,
 				783A84732C01411300CF56FF /* CoverImageView.swift in Sources */,
@@ -391,6 +413,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		780B692E2C4FE2FE0069B1E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 780B692D2C4FE2FE0069B1E1 /* SwiftLintBuildToolPlugin */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		78B636112BD39A3F00004EE7 /* Debug */ = {
@@ -618,6 +647,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		780B692C2C4FE2880069B1E1 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.53.0;
+			};
+		};
 		785D929F2BDA3D2E006C3D6E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -653,6 +690,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		780B692D2C4FE2FE0069B1E1 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 780B692C2C4FE2880069B1E1 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
 		785D92A02BDA3D2E006C3D6E /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 785D929F2BDA3D2E006C3D6E /* XCRemoteSwiftPackageReference "Kingfisher" */;
