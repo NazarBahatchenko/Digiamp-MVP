@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PrivateNoteOnTopOfCoverImageView: View {
     @State private var privateNoteRotationAngle: Double = 0.0
+    @State private var privateNoteScale: CGFloat = 1.2
     var privateNote: String
     
     var body: some View {
@@ -24,9 +25,16 @@ struct PrivateNoteOnTopOfCoverImageView: View {
                     .frame(width: 130, height: 140)
                 
             }
+            .scaleEffect(privateNoteScale)
             .rotationEffect(Angle(degrees: privateNoteRotationAngle))
             .onAppear {
                 privateNoteRotationAngle = Double.random(in: -20...10)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        privateNoteScale = 1.0
+                    }
+                }
             }
         }
     }

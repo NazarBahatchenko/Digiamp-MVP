@@ -65,7 +65,7 @@ struct MusicItemGrid: View {
                 } label: {
                     Image(systemName: "ellipsis")
                         .frame(width: 30, height: 30)
-                        .background(Color("AccentColorSecondary"))
+                        .background(Color("AccentColor"))
                         .cornerRadius(8)
                         .foregroundStyle(Color("TextColor"))
                 }

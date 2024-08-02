@@ -20,36 +20,44 @@ struct AddPrivateNoteView: View {
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     @Environment(\.dismiss) var dismiss
     @State private var formIncompleteAlert = false
-
+    
+    init(musicItem: MusicItem, firestoreViewModel: FirestoreViewModel, musicItemViewModel: MusicItemViewModel) {
+          self.musicItem = musicItem
+          self.firestoreViewModel = firestoreViewModel
+          self.musicItemViewModel = musicItemViewModel
+          configureNavigationBarAppearance()
+      }
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                Color("AccentColorSecondary").ignoresSafeArea(.all)
+                Color("AccentColor").ignoresSafeArea(.all)
                 VStack {
                     ZStack {
                         RoundedRectangle(cornerRadius: 16)
                             .fill(Color("PrivateNoteColor"))
                             .frame(width: 350, height: 50)
                         Text(musicItem.title)
+                            .frame(width: 340)
                             .lineLimit(1)
                             .font(.custom("Supreme-Bold", size: 16))
                             .foregroundColor(Color("SystemWhite"))
                     }
                     .padding(.vertical, 10)
-                        VStack {
-                            TextEditor(text: $privateNoteText)
-                                .frame(width: 350)
-                                .scrollContentBackground(.hidden)
-                                .background(Color.clear)
-                                .font(.custom("Poppins-Regular", size: 24))
-                                .foregroundColor(Color("SystemWhite"))
-                        }
-                        .padding(.horizontal)
+                    VStack {
+                        TextEditor(text: $privateNoteText)
+                            .frame(width: 350)
+                            .scrollContentBackground(.hidden)
+                            .background(Color.clear)
+                            .font(.custom("Poppins-Regular", size: 24))
+                            .foregroundColor(Color("SystemWhite"))
+                    }
+                    .padding(.horizontal)
                     Spacer()
                 }
             }
             .interactiveDismissDisabled()
-            .navigationBarTitle("Private Note", displayMode: .inline).foregroundStyle(Color("SystemWhite"))
+            .navigationBarTitle("Private Note", displayMode: .inline)
             .onTapGesture {
                 self.hideKeyboardInAddReview()
             }
@@ -67,6 +75,7 @@ struct AddPrivateNoteView: View {
                     } label: {
                         Image(systemName: "trash")
                             .foregroundStyle(Color("SystemWhite"))
+                            .font(.system(size: 18, weight: .medium))
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -83,13 +92,18 @@ struct AddPrivateNoteView: View {
                 }
             }
             .onAppear {
+                configureNavigationBarAppearance()
                 Task {
                     await loadExistingPrivateNote(itemId: musicItem.id)
                 }
             }
+            .onDisappear{
+                configureNavigationBarAppearanceForOnDisappear()
+            }
         }
     }
 }
+
 extension AddPrivateNoteView {
     private func loadExistingPrivateNote(itemId: String) async {
         guard let userId = Auth.auth().currentUser?.uid else {
@@ -117,7 +131,32 @@ extension AddPrivateNoteView {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
     }
-   private func hideKeyboardInAddReview() {
+    private func hideKeyboardInAddReview() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    private func configureNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(named: "SystemWhite") ?? .black]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(named: "SystemWhite") ?? .black]
+        appearance.backgroundColor = UIColor(named: "AccentColor")
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+    }
+    // Method needed to fix a bug that made general NavBar appearance change to AddPrivateNote's NavBar appearance
+    private func configureNavigationBarAppearanceForOnDisappear() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(named: "TextColor") ?? .black]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(named: "TextColor") ?? .black]
+        appearance.backgroundColor = UIColor(named: "TabBarColor")
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
     }
 }

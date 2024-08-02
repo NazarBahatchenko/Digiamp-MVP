@@ -17,7 +17,7 @@ struct APIMusicItemDetailView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                Spacer(minLength: 120)
+                Spacer(minLength: 135)
                 VStack {
                     CoverImageView(imageUrl: APIMusicItem.coverImage ?? APIMusicItem.thumb)
                         .onAppear {
@@ -58,21 +58,7 @@ struct APIMusicItemDetailView: View {
                                 showDetails.toggle()
                             }
                         }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 350, height: 50)
-                                    .foregroundStyle(Color("MainColor"))
-                                    .shadow(radius: 1)
-                                HStack {
-                                    Text(showDetails ? "Less Details" : "More Details")
-                                        .font(.custom("Poppins-Bold", size: 16))
-                                        .foregroundColor(Color("AccentColor"))
-                                    Spacer()
-                                    Image(systemName: showDetails ? "chevron.up" : "chevron.down")
-                                        .foregroundColor(Color("AccentColor"))
-                                }
-                                .frame(width: 320, height: 50)
-                            }
+                            ShowDetailsButtonView(showDetails: $showDetails)
                         }
                         if showDetails {
                             VStack(alignment: .leading, spacing: 5) {
@@ -122,7 +108,7 @@ struct APIMusicItemDetailView: View {
                                                 Link(destination: URL(string: video.uri)!) {
                                                     Text(video.title)
                                                         .font(.custom("Poppins-Regular", size: 16))
-                                                        .foregroundStyle(Color("AccentColorSecondary"))
+                                                        .foregroundStyle(Color("AccentColor"))
                                                         .lineLimit(2)
                                                         .padding(.bottom, 3)
                                                 }
@@ -157,6 +143,7 @@ struct APIMusicItemDetailView: View {
             self.presentationMode.wrappedValue.dismiss()
         }) {
             Image(systemName: "chevron.left")
+                .font(.system(size: 18, weight: .medium))
         })
     }
     
@@ -176,6 +163,7 @@ struct APIMusicItemDetailView: View {
                 }
             } label: {
                 Image(systemName: "arrow.down.square")
+                    .font(.system(size: 18, weight: .medium))
             }
             .onTapGesture {
                 impactFeedback(style: .medium)

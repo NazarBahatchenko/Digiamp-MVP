@@ -13,7 +13,6 @@ struct SearchBarView: View {
     @StateObject var viewModel: DiscogsAPIViewModel
     @FocusState private var isTextFieldFocused: Bool
     
-    // State to manage the debouncing
     @State private var searchCancellable: AnyCancellable?
     
     var body: some View {
@@ -74,7 +73,6 @@ struct SearchBarView: View {
     }
 }
 
-// Helper extension to hide the keyboard
 extension UIApplication {
     func endEditing() {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

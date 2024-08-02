@@ -22,7 +22,7 @@ struct ImagePickerView: View {
                         .cornerRadius(16)  // Ensure the image also has rounded corners if desired
                 } else {
                     RoundedRectangle(cornerRadius: 15)
-                        .fill(Color("AccentColorSecondary").opacity(0.1))
+                        .fill(Color("AccentColor").opacity(0.1))
                         .frame(width: 200, height: 200)
                         .overlay(
                             RoundedRectangle(cornerRadius: 15) // Inner rectangle for the stroke

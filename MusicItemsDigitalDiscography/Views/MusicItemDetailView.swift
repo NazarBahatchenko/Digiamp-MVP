@@ -19,7 +19,7 @@ struct MusicItemDetailView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    Spacer(minLength: 120)
+                    Spacer(minLength: 135)
                     VStack {
                         ZStack {
                             CoverImageView(imageUrl: musicItem.coverImage ?? musicItem.thumb ?? "")
@@ -44,7 +44,7 @@ struct MusicItemDetailView: View {
                                 fontSize: 18,
                                 cornerRadius: 8,
                                 buttonHeight: 40,
-                                buttonWidth: 350 - (44 + 44 + 16)
+                                buttonWidth: 350 - (55 + 55 + 16)
                             )
                             CustomActionButton(
                                 action: {
@@ -53,7 +53,7 @@ struct MusicItemDetailView: View {
                                 },
                                 cornerRadius: 8,
                                 buttonHeight: 40,
-                                buttonWidth: 44,
+                                buttonWidth: 55,
                                 isButtonWithText: false,
                                 imageSystemName: "note.text",
                                 imageHeight: 24,
@@ -66,7 +66,7 @@ struct MusicItemDetailView: View {
                                 },
                                 cornerRadius: 8,
                                 buttonHeight: 40,
-                                buttonWidth: 44,
+                                buttonWidth: 55,
                                 isButtonWithText: false,
                                 imageSystemName: "ellipsis",
                                 imageHeight: 24,
@@ -163,7 +163,7 @@ struct MusicItemDetailView: View {
                                             Link(destination: URL(string: video.uri)!) {
                                                 Text(video.title)
                                                     .font(.custom("Poppins-Regular", size: 16))
-                                                    .foregroundStyle(Color("AccentColorSecondary"))
+                                                    .foregroundStyle(Color("AccentColor"))
                                                     .lineLimit(2)
                                                     .padding(.bottom, 3)
                                             }
@@ -190,6 +190,7 @@ struct MusicItemDetailView: View {
             self.presentationMode.wrappedValue.dismiss()
         }) {
             Image(systemName: "chevron.left")
+                .font(.system(size: 18, weight: .medium))
         })
         .sheet(isPresented: $showPrivateNoteView) {
             AddPrivateNoteView(musicItem: musicItem, firestoreViewModel: FirestoreViewModel(), musicItemViewModel: MusicItemViewModel())

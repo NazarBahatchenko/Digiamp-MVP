@@ -11,16 +11,16 @@ struct ShowDetailsButtonView: View {
     @Binding var showDetails: Bool
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 15)
+            RoundedRectangle(cornerRadius: 16)
                 .frame(width: 350, height: 50)
-                .foregroundStyle(Color("MainColor"))
+                .foregroundStyle(Color("MainColorSecondary"))
             HStack {
                 Text(showDetails ? "Less Details" : "More Details")
                     .font(.custom("Poppins-Bold", size: 16))
-                    .foregroundColor(Color("AccentColor"))
+                    .foregroundColor(Color("TextColor"))
                 Spacer()
                 Image(systemName: showDetails ? "chevron.up" : "chevron.down")
-                    .foregroundColor(Color("AccentColor"))
+                    .foregroundColor(Color("TextColor"))
             }
             .frame(width: 320, height: 50)
         }

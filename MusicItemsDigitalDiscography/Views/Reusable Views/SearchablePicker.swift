@@ -25,11 +25,11 @@ struct SearchablePicker: View {
                 HStack {
                     Text(selection.isEmpty ? "Select \(title)" : selection)
                         .font(.custom("Poppins-Regular", size: 14))
-                        .foregroundColor(selection.isEmpty ? Color("AccentColorSecondary").opacity(0.6) : Color("AccentColor"))
+                        .foregroundColor(selection.isEmpty ? Color("AccentColor").opacity(0.6) : Color("AccentColor"))
                         .padding()
                     Spacer()
                     Image(systemName: "chevron.down")
-                        .foregroundColor(Color("AccentColorSecondary"))
+                        .foregroundColor(Color("AccentColor"))
                         .padding(.trailing)
                 }
                 .frame(height: 40)

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CodeScanner
 import CoreHaptics
 
 struct CollectionListView: View {
@@ -18,15 +17,14 @@ struct CollectionListView: View {
     @State private var isPresentedSettingsSheet = false
     @State private var isPresentedTrashSheet = false
     @State private var isPresentedReviewSheet  = false
-    @State private var scannedCode: String?
     @State private var isPresentingAddMusicItem = false
     @State private var isPresentingSearchDiscogs = false
-    
+    @State private var isPresentingAddMusicItemWithFloatingButton = false
     var columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
         GridItem(.flexible(), spacing: 15)
     ]
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -60,14 +58,9 @@ struct CollectionListView: View {
                             }) {
                                 Label("Trash", systemImage: "trash")
                             }
-                            Button(action: {
-                                isPresentedReviewSheet = true
-                                impactFeedback(style: .light)
-                            }) {
-                                Label("Review Test Screen", systemImage: "star")
-                            }
                         } label: {
                             Image(systemName: "ellipsis.circle")
+                                .font(.system(size: 18, weight: .medium))
                         }
                         .onTapGesture {
                             impactFeedback(style: .medium)
@@ -91,19 +84,16 @@ struct CollectionListView: View {
                 .sheet(isPresented: $isPresentedTrashSheet, content: {
                     TrashView(viewModel: viewModel)
                 })
-                .sheet(isPresented: $isPresentingScanner) {
-                    CodeScannerView(codeTypes: [.ean8, .ean13], simulatedData: "Some simulated data") { result in
-                        isPresentingScanner = false
-                        switch result {
-                        case .success(let code):
-                            scannedCode = code.string
-                            discogsViewModel.query = scannedCode ?? ""
-                            isPresentingSearchDiscogs = true
-                        case .failure(let error):
-                            print("Scanning failed: \(error.localizedDescription)")
-                        }
-                    }
-                }
+                .sheet(isPresented: $isPresentingAddMusicItemWithFloatingButton) {
+                                CustomFloatingActionButtonView(
+                                    isPresentingAddMusicItem: $isPresentingAddMusicItem,
+                                    isPresentingSearchDiscogs: $isPresentingSearchDiscogs,
+                                    isPresentingScanner: $isPresentingScanner
+                                )
+                                .presentationDetents([.height(130)])
+                                .transition(.slide)
+                                .presentationDragIndicator(.visible)
+                            }
                 .background(
                     Color("MainColor").ignoresSafeArea()
                 )
@@ -111,7 +101,18 @@ struct CollectionListView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        floatingActionButton()
+                        Button {
+                            isPresentingAddMusicItemWithFloatingButton = true
+                        } label: {
+                            Image(systemName: "plus")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color.accentColor)
+                                .clipShape(Circle())
+                                .shadow(radius: 3)
+                        }
                         Spacer()
                     }
                 }
@@ -126,54 +127,19 @@ struct CollectionListView: View {
             .navigationDestination(for: MusicItem.self) { item in
                 MusicItemDetailView(musicItem: item, musicItemViewModel: viewModel)
             }
+            .navigationDestination(isPresented: $isPresentingScanner) {
+                BarCodeScannerView(isPresentingSearchDiscogs: $isPresentingSearchDiscogs, isPresentingScanner: $isPresentingScanner, discogsViewModel: discogsViewModel)
+                    .navigationBarBackButtonHidden(true)
+                
+            }
         }
     }
-    
-    private func floatingActionButton() -> some View {
-        Menu {
-            Button(action: {
-                impactFeedback(style: .light)
-                isPresentingAddMusicItem = true // Set the state variable
-            }) {
-                Label("Add Manually", systemImage: "square.and.pencil")
-            }
-            Button(action: {
-                impactFeedback(style: .light)
-                isPresentingSearchDiscogs = true // Set the state variable
-            }) {
-                Label("Add with Discogs", systemImage: "magnifyingglass")
-            }
-            Button(action: {
-                impactFeedback(style: .light)
-                isPresentingScanner = true
-            }) {
-                Label("Add with Barcode", systemImage: "barcode")
-            }
-        } label: {
-            Image(systemName: "plus")
-                .resizable()
-                .frame(width: 30, height: 30)
-                .padding()
-                .foregroundColor(.white)
-                .background(Color.accentColor)
-                .clipShape(Circle())
-                .shadow(radius: 3)
-        }
-        .onTapGesture {
-            impactFeedback(style: .medium)
-        }
-        .padding(.all, 20)
-    }
-    
+}
+
+extension CollectionListView {
     private func impactFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
     }
-}
-
-enum NavigationDestination: Hashable {
-    case addMusicItem
-    case searchDiscogs
-    case musicItemDetail(MusicItem)
 }
 

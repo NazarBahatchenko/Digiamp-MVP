@@ -51,6 +51,7 @@ struct SettingsRootView: View {
                         }
                     }, label: {
                         Image(systemName: "arrow.clockwise.square")
+                            .font(.system(size: 18, weight: .medium))
                     })
                 }
             }

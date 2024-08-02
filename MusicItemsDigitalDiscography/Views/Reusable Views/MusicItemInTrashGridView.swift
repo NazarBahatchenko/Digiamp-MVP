@@ -67,7 +67,7 @@ struct MusicItemInTrashGridView: View {
                 } label: {
                     Image(systemName: "ellipsis")
                         .frame(width: 175/3*0.5, height: 175/3*0.5)
-                        .background(Color("AccentColorSecondary"))
+                        .background(Color("AccentColor"))
                         .cornerRadius(8)
                         .foregroundStyle(Color("TextColor"))
                 }

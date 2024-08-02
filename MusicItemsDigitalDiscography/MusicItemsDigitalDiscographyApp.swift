@@ -14,7 +14,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         return true
     }
-
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return GIDSignIn.sharedInstance.handle(url)
     }
@@ -25,14 +25,16 @@ struct MusicItemsDigitalDiscographyApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var authViewModel = AuthenticationViewModel()
     @StateObject var userViewModel = UserViewModel()
-    @State private var showSplashScreen = true // State variable for splash screen
-
+    @State private var showSplashScreen = true
+    init() {
+        configureNavigationBarAppearance()
+    }
+    
     var body: some Scene {
         WindowGroup {
             if showSplashScreen {
                 SplashScreenView()
                     .onAppear {
-                        // Hide the splash screen after 1 second
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                             withAnimation {
                                 showSplashScreen = false
@@ -53,5 +55,20 @@ struct MusicItemsDigitalDiscographyApp: App {
                 }
             }
         }
+    }
+}
+
+extension MusicItemsDigitalDiscographyApp {
+    private func configureNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(named: "TextColor") ?? .black]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(named: "TextColor") ?? .black]
+        appearance.backgroundColor = UIColor(named: "TabBarColor")
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
     }
 }

@@ -55,6 +55,8 @@
 		78B6365A2BD3A1BE00004EE7 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B636592BD3A1BE00004EE7 /* LogInView.swift */; };
 		78D2A83A2C5795FB009EA8FE /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78D2A8392C5793C6009EA8FE /* Configuration.plist */; };
 		78D2A83C2C592B3D009EA8FE /* PrivateNoteOnTopOfCoverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D2A83B2C592B3C009EA8FE /* PrivateNoteOnTopOfCoverImageView.swift */; };
+		78D2A83E2C5A531E009EA8FE /* CustomFloatingActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D2A83D2C5A531E009EA8FE /* CustomFloatingActionButtonView.swift */; };
+		78D2A8402C5BD451009EA8FE /* BarCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D2A83F2C5BD451009EA8FE /* BarCodeScannerView.swift */; };
 		78D8B6652BE2DF4E00D763F7 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */; };
 		78D8B6672BE2E00D00D763F7 /* SearchablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */; };
 		78D8B6692BE2E04F00D763F7 /* CustomActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8B6682BE2E04F00D763F7 /* CustomActionButton.swift */; };
@@ -105,6 +107,8 @@
 		78B636592BD3A1BE00004EE7 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		78D2A8392C5793C6009EA8FE /* Configuration.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Configuration.plist; sourceTree = "<group>"; };
 		78D2A83B2C592B3C009EA8FE /* PrivateNoteOnTopOfCoverImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateNoteOnTopOfCoverImageView.swift; sourceTree = "<group>"; };
+		78D2A83D2C5A531E009EA8FE /* CustomFloatingActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFloatingActionButtonView.swift; sourceTree = "<group>"; };
+		78D2A83F2C5BD451009EA8FE /* BarCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCodeScannerView.swift; sourceTree = "<group>"; };
 		78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
 		78D8B6662BE2E00D00D763F7 /* SearchablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePicker.swift; sourceTree = "<group>"; };
 		78D8B6682BE2E04F00D763F7 /* CustomActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionButton.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 		789C5E752BE4EAE000638C2F /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				78D2A83D2C5A531E009EA8FE /* CustomFloatingActionButtonView.swift */,
 				780B692F2C4FE5F70069B1E1 /* ImagePickerView.swift */,
 				78D8B6682BE2E04F00D763F7 /* CustomActionButton.swift */,
 				78D8B6642BE2DF4E00D763F7 /* CustomTextFieldView.swift */,
@@ -225,6 +230,7 @@
 				789C5E7A2BE4EE0D00638C2F /* TrashView.swift */,
 				785D929B2BDA3CF4006C3D6E /* CollectionListView.swift */,
 				785D92952BDA3C19006C3D6E /* AddMusicItemView.swift */,
+				78D2A83F2C5BD451009EA8FE /* BarCodeScannerView.swift */,
 			);
 			path = "Main Views";
 			sourceTree = "<group>";
@@ -379,6 +385,7 @@
 				789C5E862BE4F07500638C2F /* SearchBarView.swift in Sources */,
 				785D924B2BD960A6006C3D6E /* EditProfileView.swift in Sources */,
 				785D56722BE69EB300CFB91B /* MusicItemInTrashGridView.swift in Sources */,
+				78D2A83E2C5A531E009EA8FE /* CustomFloatingActionButtonView.swift in Sources */,
 				78EB692D2C0F29C900DECF9E /* AddPrivateNoteView.swift in Sources */,
 				789C5E8C2BE5154600638C2F /* APIMusicItem.swift in Sources */,
 				78D8B6692BE2E04F00D763F7 /* CustomActionButton.swift in Sources */,
@@ -396,6 +403,7 @@
 				785D566E2BE51E0100CFB91B /* MusicItemDetailView.swift in Sources */,
 				785D92A32BDA3D4C006C3D6E /* MusicItem.swift in Sources */,
 				785D92492BD95F1C006C3D6E /* SettingsRootView.swift in Sources */,
+				78D2A8402C5BD451009EA8FE /* BarCodeScannerView.swift in Sources */,
 				785D92442BD9046C006C3D6E /* DigiapmUser.swift in Sources */,
 				78D2A83C2C592B3D009EA8FE /* PrivateNoteOnTopOfCoverImageView.swift in Sources */,
 				78D8B6672BE2E00D00D763F7 /* SearchablePicker.swift in Sources */,
@@ -558,7 +566,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -599,7 +607,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
