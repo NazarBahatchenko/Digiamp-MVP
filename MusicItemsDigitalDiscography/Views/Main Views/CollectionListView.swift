@@ -85,7 +85,7 @@ struct CollectionListView: View {
                     TrashView(viewModel: viewModel)
                 })
                 .sheet(isPresented: $isPresentingAddMusicItemWithFloatingButton) {
-                                CustomFloatingActionButtonView(
+                                FloatingActionButtonSheetWithSearchOptionsView(
                                     isPresentingAddMusicItem: $isPresentingAddMusicItem,
                                     isPresentingSearchDiscogs: $isPresentingSearchDiscogs,
                                     isPresentingScanner: $isPresentingScanner

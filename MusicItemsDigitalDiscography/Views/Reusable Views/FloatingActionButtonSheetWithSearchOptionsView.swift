@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreHaptics
 
-struct CustomFloatingActionButtonView: View {
+struct FloatingActionButtonSheetWithSearchOptionsView: View {
     @Binding var isPresentingAddMusicItem: Bool
     @Binding var isPresentingSearchDiscogs: Bool
     @Binding var isPresentingScanner: Bool
@@ -98,7 +98,7 @@ struct CustomFloatingActionButtonView: View {
     }
 }
 
-extension CustomFloatingActionButtonView {
+extension FloatingActionButtonSheetWithSearchOptionsView {
     private func impactFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
